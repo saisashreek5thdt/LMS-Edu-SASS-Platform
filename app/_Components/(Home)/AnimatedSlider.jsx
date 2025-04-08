@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ✅ Use this default slides array inside the component
 const defaultSlides = [
   {
     type: "image",
@@ -48,6 +47,8 @@ const defaultSlides = [
 
 export default function AnimatedSlider({ slides = defaultSlides }) {
   const [[index, direction], setIndex] = useState([0, 0]);
+  const [isPaused, setIsPaused] = useState(false);
+  const timeoutRef = useRef(null);
 
   const paginate = (dir) => {
     setIndex(([prev]) => {
@@ -68,6 +69,21 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
     exit: (dir) => ({ x: dir < 0 ? 300 : -300, opacity: 0 }),
   };
 
+  const textVariants = {
+    initial: { y: 30, opacity: 0 },
+    animate: { y: 0, opacity: 1, transition: { delay: 0.3, duration: 0.5 } },
+    exit: { y: 30, opacity: 0, transition: { duration: 0.3 } },
+  };
+
+  useEffect(() => {
+    if (isPaused) return;
+    timeoutRef.current = setTimeout(() => paginate(1), 5000);
+    return () => clearTimeout(timeoutRef.current);
+  }, [index, isPaused]);
+
+  const handleMouseEnter = () => setIsPaused(true);
+  const handleMouseLeave = () => setIsPaused(false);
+
   if (!slides || !slides.length || index >= slides.length) {
     return (
       <div className="text-center py-10 text-gray-500">
@@ -80,10 +96,12 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
 
   return (
     <div
-      className="relative w-full max-w-full mx-auto overflow-hidden"
+      className="relative w-full overflow-hidden"
       {...handlers}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative h-[400px] overflow-hidden shadow-lg">
+      <div className="relative h-[400px] sm:h-[300px] overflow-hidden">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={index}
@@ -107,22 +125,32 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
                 autoPlay
                 muted
                 loop
+                playsInline
                 className="w-full h-full object-cover"
               />
             )}
-            <div className="absolute bottom-0 left-0 w-full bg-black/50 p-4 text-white">
-              <h2 className="text-xl font-bold">{slide.title}</h2>
-              <p className="text-sm">{slide.caption}</p>
-            </div>
+
+            <motion.div
+              className="absolute bottom-0 left-0 w-full bg-black/50 px-4 py-3 text-white"
+              variants={textVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <motion.h2 className="text-xl sm:text-base font-bold">
+                {slide.title}
+              </motion.h2>
+              <motion.p className="text-sm sm:text-xs">{slide.caption}</motion.p>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Navigation buttons */}
+      {/* Navigation Buttons */}
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-1/2 left-2 -translate-y-1/2 z-10"
+        className="absolute top-1/2 left-2 -translate-y-1/2 z-10 sm:left-1"
         onClick={() => paginate(-1)}
       >
         <ChevronLeft />
@@ -130,7 +158,7 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-1/2 right-2 -translate-y-1/2 z-10"
+        className="absolute top-1/2 right-2 -translate-y-1/2 z-10 sm:right-1"
         onClick={() => paginate(1)}
       >
         <ChevronRight />
