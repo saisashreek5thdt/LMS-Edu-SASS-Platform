@@ -74,11 +74,13 @@ export default function Header() {
                   {link}
                 </Link>
               ))}
+              {/* Shopping Cart */}
               <div className="py-4 flex justify-center items-center gap-4">
                 <ShoppingCart className="cursor-pointer hover:text-gray-100" />
-                <button className="hover:text-gray-100 transition-colors duration-300">
-                  Login
-                </button>
+              </div>
+              {/* Login */}
+              <div className="py-3 text-center hover:bg-red-300 dark:hover:bg-gray-800 transition-colors">
+                <button className="text-lg">Login</button>
               </div>
             </div>
           </motion.div>
