@@ -23,10 +23,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg">
           {navLinks.map((link) => (
-            <Link
-              href={`${link.toLowerCase().replace(/\s+/g, "")}`}
-              key={link}
-            >
+            <Link href={`${link.toLowerCase().replace(/\s+/g, "")}`} key={link}>
               <span className="hover:text-gray-100 transition-colors duration-300 cursor-pointer">
                 {link}
               </span>
@@ -66,19 +63,18 @@ export default function Header() {
             transition={{ duration: 0.3 }}
             className="md:hidden bg-red-400 dark:bg-gray-900 overflow-hidden"
           >
-            <div className="flex flex-col items-center py-4 space-y-4 font-medium text-lg">
+            <div className="flex flex-col divide-y divide-white/20 dark:divide-gray-600">
               {navLinks.map((link) => (
                 <Link
                   href={`${link.toLowerCase().replace(/\s+/g, "")}`}
                   key={link}
                   onClick={toggleMenu}
+                  className="py-3 text-center text-lg hover:bg-red-300 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <span className="hover:text-gray-100 transition-colors duration-300 cursor-pointer">
-                    {link}
-                  </span>
+                  {link}
                 </Link>
               ))}
-              <div className="flex gap-4 items-center pt-2">
+              <div className="py-4 flex justify-center items-center gap-4">
                 <ShoppingCart className="cursor-pointer hover:text-gray-100" />
                 <button className="hover:text-gray-100 transition-colors duration-300">
                   Login
