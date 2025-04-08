@@ -4,7 +4,7 @@ import { Instagram, Youtube, Facebook, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <>
+    <footer className="mt-20">
       <div className="w-full bg-slate-400 h-auto flex gap-48">
         {/* Logo Section */}
         <div className="flex flex-col ml-10 gap-8 sm:gap-16">
@@ -18,16 +18,16 @@ export default function Footer() {
             />
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-2 mb-5 lg:gap-6">
-            <p className="bg-white p-1 flex justify-center items-center rounded-xl">
+            <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Instagram size={24} />
             </p>
-            <p className="bg-white p-1 flex justify-center items-center rounded-xl">
+            <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Youtube size={24} />
             </p>
-            <p className="bg-white p-1 flex justify-center items-center rounded-xl">
+            <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Facebook size={24} />
             </p>
-            <p className="bg-white p-1 flex justify-center items-center rounded-xl">
+            <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Linkedin size={24} />
             </p>
           </div>
@@ -62,6 +62,6 @@ export default function Footer() {
       <div className="h-14 bg-slate-200 text-center flex items-center justify-center">
         copyright @ {new Date().getFullYear()}
       </div>
-    </>
+    </footer>
   );
 }
