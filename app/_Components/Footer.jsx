@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Instagram, Youtube, Facebook, Linkedin } from 'lucide-react';
+import { Instagram, Youtube, Facebook, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -36,7 +36,7 @@ export default function Footer() {
         {/* Grid Section */}
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-10 pb-10 text-white w-full mt-16">
           {/* Menu 1 */}
-          <div >
+          <div>
             <h6 className="text-xl font-semibold mb-2 cursor-pointer">Menu</h6>
             <ul className="list-none">
               <li className="cursor-pointer">lorem</li>
@@ -56,11 +56,10 @@ export default function Footer() {
               <li className="cursor-pointer">lorem</li>
             </ul>
           </div>
-
         </div>
       </div>
       <div className="h-14 bg-slate-200 text-center flex items-center justify-center">
-        copyright @ {new Date().getFullYear()}
+        Copyright ©️ {new Date().getFullYear()}
       </div>
     </>
   );

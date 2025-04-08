@@ -13,7 +13,7 @@ export default function Header() {
   const navLinks = ["Home", "Resources", "Courses", "Team", "Contact Us"];
 
   return (
-    <header className="w-full bg-red-400 dark:bg-gray-900 text-white shadow-md fixed z-50">
+    <header className="w-full bg-red-400 dark:bg-gray-900 text-white shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center">
