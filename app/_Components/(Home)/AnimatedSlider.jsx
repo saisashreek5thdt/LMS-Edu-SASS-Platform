@@ -8,44 +8,28 @@ import { cn } from "@/lib/utils";
 
 const defaultSlides = [
   {
-    type: "image",
     src: "/slider/images/slide1.jpg",
     title: "Welcome to the Event",
     caption: "This is an awesome event image.",
   },
   {
-    type: "image",
     src: "/slider/images/slide2.jpg",
     title: "Great Speakers",
     caption: "Meet top professionals from the industry.",
   },
   {
-    type: "video",
-    src: "/slider/videos/slider.mp4",
-    title: "Event Teaser",
-    caption: "Watch the official teaser video.",
-  },
-  {
-    type: "image",
     src: "/slider/images/slide3.jpg",
     title: "Amazing Location",
     caption: "Hosted in a beautiful city.",
   },
   {
-    type: "image",
     src: "/slider/images/slide4.jpg",
     title: "More Moments",
     caption: "Captured from the event.",
   },
-  {
-    type: "video",
-    src: "/slider/videos/slider.mp4",
-    title: "Highlights",
-    caption: "Experience the energy.",
-  },
 ];
 
-export default function AnimatedSlider({ slides = defaultSlides }) {
+export default function AnimatedImageSlider({ slides = defaultSlides }) {
   const [[index, direction], setIndex] = useState([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
   const timeoutRef = useRef(null);
@@ -63,16 +47,37 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
     trackMouse: true,
   });
 
-  const variants = {
-    enter: (dir) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir) => ({ x: dir < 0 ? 300 : -300, opacity: 0 }),
+  const imageVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 100 : -100,
+      scale: 1.05,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.43, 0.13, 0.23, 0.96],
+      },
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? 100 : -100,
+      scale: 0.95,
+      opacity: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    }),
   };
 
-  const textVariants = {
-    initial: { y: 30, opacity: 0 },
-    animate: { y: 0, opacity: 1, transition: { delay: 0.3, duration: 0.5 } },
-    exit: { y: 30, opacity: 0, transition: { duration: 0.3 } },
+  const captionVariants = {
+    initial: { y: 20, opacity: 0 },
+    animate: {
+      y: 0,
+      opacity: 1,
+      transition: { delay: 0.4, duration: 0.6, ease: "easeOut" },
+    },
+    exit: { y: 20, opacity: 0, transition: { duration: 0.3 } },
   };
 
   useEffect(() => {
@@ -84,14 +89,6 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
 
-  if (!slides || !slides.length || index >= slides.length) {
-    return (
-      <div className="text-center py-10 text-gray-500">
-        No slides available.
-      </div>
-    );
-  }
-
   const slide = slides[index];
 
   return (
@@ -101,52 +98,53 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative h-[400px] sm:h-[300px] overflow-hidden">
+      <div className="relative h-[600px] sm:h-[400px]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={index}
             custom={direction}
-            variants={variants}
+            variants={imageVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.5 }}
             className="absolute w-full h-full top-0 left-0 flex items-center justify-center bg-black"
           >
-            {slide.type === "image" ? (
-              <img
-                src={slide.src}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <video
-                src={slide.src}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-              />
-            )}
+            <img
+              src={slide.src}
+              alt={slide.title}
+              className="w-full h-full object-cover rounded-md shadow-lg"
+            />
 
+            {/* Captions */}
             <motion.div
-              className="absolute bottom-0 left-0 w-full bg-black/50 px-4 py-3 text-white"
-              variants={textVariants}
+              className="absolute bottom-0 left-0 w-full bg-black/60 px-4 py-5 text-white backdrop-blur-sm"
+              variants={captionVariants}
               initial="initial"
               animate="animate"
               exit="exit"
             >
-              <motion.h2 className="text-xl sm:text-base font-bold">
-                {slide.title}
-              </motion.h2>
-              <motion.p className="text-sm sm:text-xs">{slide.caption}</motion.p>
+              <h2 className="text-2xl sm:text-lg font-semibold">{slide.title}</h2>
+              <p className="text-sm sm:text-xs">{slide.caption}</p>
+
+              {/* Dots under captions */}
+              <div className="flex justify-center mt-3 gap-1">
+                {slides.map((_, i) => (
+                  <motion.span
+                    key={i}
+                    className={cn(
+                      "w-2 h-2 rounded-full transition-all",
+                      i === index ? "bg-white scale-110" : "bg-white/40"
+                    )}
+                    animate={{ opacity: i === index ? 1 : 0.5 }}
+                  />
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Navigation */}
       <Button
         variant="ghost"
         size="icon"
@@ -163,20 +161,6 @@ export default function AnimatedSlider({ slides = defaultSlides }) {
       >
         <ChevronRight />
       </Button>
-
-      {/* Dots */}
-      <div className="flex justify-center mt-4 gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex([i, i > index ? 1 : -1])}
-            className={cn(
-              "w-3 h-3 rounded-full transition-all",
-              i === index ? "bg-primary" : "bg-gray-300"
-            )}
-          />
-        ))}
-      </div>
     </div>
   );
 }
