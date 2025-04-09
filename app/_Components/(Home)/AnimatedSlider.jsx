@@ -123,8 +123,8 @@ export default function AnimatedImageSlider({ slides = defaultSlides }) {
               animate="animate"
               exit="exit"
             >
-              <h2 className="text-2xl sm:text-lg font-semibold">{slide.title}</h2>
-              <p className="text-sm sm:text-xs">{slide.caption}</p>
+              {/* <h2 className="text-2xl sm:text-lg font-semibold">{slide.title}</h2>
+              <p className="text-sm sm:text-xs">{slide.caption}</p> */}
 
               {/* Dots under captions */}
               <div className="flex justify-center mt-3 gap-1">

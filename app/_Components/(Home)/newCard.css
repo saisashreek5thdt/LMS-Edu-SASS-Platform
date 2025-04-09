@@ -48,7 +48,8 @@
   .card .face.face2{
     background: #111;
     transition: 0.5s;
-    background: linear-gradient(45deg, #e11d48, #fb7185);
+    /* background: linear-gradient(45deg, #F1E7E7, #E69DB8); */
+    background: #E69DB8;
     border-radius: 15px;
   }
   

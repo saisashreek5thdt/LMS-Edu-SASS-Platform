@@ -6,17 +6,17 @@ export default function NewCardHover() {
         {
             title: "Find Your Module/Course",
             description: "Choose your course from our library",
-            icon:<BookOpenCheck className='w-16 h-16'/>
+            icon:<BookOpenCheck strokeWidth={1} className='w-16 h-16'/>
         },
         {
             title: "Explore Course Details",
             description: "Select and explore detailed course information",
-            icon:<LibraryBig className='w-16 h-16'/>
+            icon:<LibraryBig strokeWidth={1} className='w-16 h-16'/>
         },
         {
             title: "Enroll in Your Course",
             description: "Complete enrollment and start learning",
-            icon:<SquarePlay className='w-16 h-16'/>
+            icon:<SquarePlay strokeWidth={1} className='w-16 h-16'/>
         },
     ];
 

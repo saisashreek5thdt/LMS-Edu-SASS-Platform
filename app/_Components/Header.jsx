@@ -10,10 +10,10 @@ export default function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const navLinks = ["Home", "Resources", "Courses", "Team", "Contact Us"];
+  const navLinks = ["Home", "Courses", "Team", "Contact Us"];
 
   return (
-    <header className="w-full bg-red-400 dark:bg-gray-900 text-white shadow-md z-50">
+    <header className="w-full bg-[#F1E7E7] dark:bg-gray-900 text-[#E69DB8] shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center">
@@ -24,7 +24,7 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg">
           {navLinks.map((link) => (
             <Link href={`${link.toLowerCase().replace(/\s+/g, "")}`} key={link}>
-              <span className="hover:text-gray-100 transition-colors duration-300 cursor-pointer">
+              <span className=" transition-colors duration-300 cursor-pointer">
                 {link}
               </span>
             </Link>
@@ -33,8 +33,8 @@ export default function Header() {
 
         {/* Right section - desktop */}
         <div className="hidden md:flex items-center gap-6">
-          <ShoppingCart className="cursor-pointer hover:text-gray-100 transition-colors duration-300" />
-          <button className="font-semibold text-lg hover:text-gray-100 transition-colors duration-300">
+          <ShoppingCart className="cursor-pointer hover:text-pink-100 transition-colors duration-300" />
+          <button className="font-semibold text-lg hover:text-pink-100 transition-colors duration-300">
             Login
           </button>
         </div>
