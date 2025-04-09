@@ -1,10 +1,13 @@
-import Layout from "./Home/layout";
-
+import AnimatedSlider from "./_Components/(Home)/AnimatedSlider";
+import CardHover from "./_Components/(Home)/CardHover";
+import NewCardHover from "./_Components/(Home)/NewCardHover";
 
 export default function Home() {
   return (
     <>
-      <Layout />
+      <AnimatedSlider />
+      {/* <CardHover/> */}
+      <NewCardHover/>
     </>
   );
 }

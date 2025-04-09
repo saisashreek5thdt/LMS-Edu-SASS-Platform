@@ -27,7 +27,7 @@ export default function Footer() {
             <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Facebook size={24} />
             </p>
-            <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
+            <p className="bg-white p-1 flex justify-center items-center rounded-xl">
               <Linkedin size={24} />
             </p>
           </div>
