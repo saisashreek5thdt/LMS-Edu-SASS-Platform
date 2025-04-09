@@ -9,8 +9,8 @@
   
   .card{
     position: relative;
-    width: 350px;
-    height: 400px;
+    width: 280px;
+    height: 300px;
     margin: 0 auto;
     background: #fff;
     box-shadow: 0 15px 60px rgba(0,0,0, .5);
@@ -48,9 +48,11 @@
   .card .face.face2{
     background: #111;
     transition: 0.5s;
+    background: linear-gradient(45deg, #e11d48, #fb7185);
+    border-radius: 15px;
   }
   
-  .card:nth-child(1) .face.face2{
+  /* .card:nth-child(1) .face.face2{
     background: linear-gradient(45deg, #3503ad, #f7308c);
     border-radius: 15px;
   }
@@ -63,7 +65,7 @@
   .card:nth-child(3) .face.face2{
     background: linear-gradient(45deg, #e91e63, #ffeb3b);
     border-radius: 15px;
-  }
+  } */
   
   .card:hover .face.face2{
     height: 60px;

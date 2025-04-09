@@ -1,19 +1,22 @@
 import './newCard.css'
-import { BookOpenCheck } from "lucide-react";
+import { BookOpenCheck, LibraryBig, SquarePlay } from "lucide-react";
 
 export default function NewCardHover() {
     const cards = [
         {
             title: "Find Your Module/Course",
             description: "Choose your course from our library",
+            icon:<BookOpenCheck className='w-16 h-16'/>
         },
         {
             title: "Explore Course Details",
             description: "Select and explore detailed course information",
+            icon:<LibraryBig className='w-16 h-16'/>
         },
         {
             title: "Enroll in Your Course",
             description: "Complete enrollment and start learning",
+            icon:<SquarePlay className='w-16 h-16'/>
         },
     ];
 
@@ -31,13 +34,13 @@ export default function NewCardHover() {
                         <div className="face face1">
                             <div className="content">
                                 <div className="flex flex-col justify-around items-center gap-5">
-                                <h2 className='text-center '>{card.title}</h2>
-                                <p className='text-center'>{card.description}</p>
+                                <h2 className='text-center text-2xl'>{card.title}</h2>
+                                <p className='text-center text-gray-700'>{card.description}</p>
                                 </div>
                             </div>
                         </div>
                         <div className="face face2">
-                            <h2><BookOpenCheck className='w-16 h-16'/></h2>
+                            <h2>{card.icon}</h2>
                         </div>
                     </div>
                     ))
