@@ -8,12 +8,18 @@ export async function GET(req) {
 
 export async function POST(req) {
   const validate = await middleware(req, "school");
-  if (!validate.success)
+  if (!validate.success) {
     return Response.json({ error: validate.error }, { status: 400 });
+  }
 
-  const newSchool = await prisma.school.create({ data: validate.data });
-  return Response.json({
-    message: "School created successfully",
-    data: newSchool,
-  });
+  try {
+    const newSchool = await prisma.school.create({ data: validate.data });
+    return Response.json({
+      message: "School created successfully",
+      data: newSchool,
+    });
+  } catch (error) {
+    console.error("Error creating school:", error); // ✅ log the real error
+    return Response.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
