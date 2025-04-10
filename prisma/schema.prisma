@@ -13,3 +13,53 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model School {
+  id           Int       @id @default(autoincrement())
+  logo         String?
+  coverImage   String?
+  name         String    @unique
+  email        String    @unique
+  password     String
+  address      String
+  phone        String
+  isVerified   Boolean   @default(false)
+  otp          String?
+  otpExpiresAt DateTime?
+  teachers     Teacher[]
+  students     Student[]
+}
+
+model Tutor {
+  id           Int       @id @default(autoincrement())
+  image        String?
+  coverImage   String?
+  name         String    @unique
+  email        String    @unique
+  password     String
+  phone        String
+  address      String
+  isVerified   Boolean   @default(false)
+  otp          String?
+  otpExpiresAt DateTime?
+}
+
+model Teacher {
+  id         Int     @id @default(autoincrement())
+  schoolId   Int
+  name       String
+  email      String  @unique
+  password   String
+  isVerified Boolean @default(false)
+  school     School  @relation(fields: [schoolId], references: [id])
+}
+
+model Student {
+  id         Int     @id @default(autoincrement())
+  schoolId   Int
+  name       String
+  email      String  @unique
+  password   String
+  isVerified Boolean @default(false)
+  school     School  @relation(fields: [schoolId], references: [id])
+}
