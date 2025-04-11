@@ -9,8 +9,29 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const navLinks = ["Home", "Courses", "Team", "Contact Us"];
+  
+  const navLinks = [
+    {
+      id: 1,
+      name: "Home",
+      link: "/"
+    },
+    {
+      id: 2,
+      name: "Courses",
+      link: "/courses"
+    },
+    {
+      id: 3,
+      name: "Team",
+      link: "/team",
+    },
+    {
+      id: 4,
+      name: "Get In Touch",
+      link: "/#footer"
+    }
+  ];
 
   return (
     <header className="w-full bg-[#F1E7E7] dark:bg-gray-900 text-[#E69DB8] shadow-md z-50">
@@ -23,9 +44,9 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg">
           {navLinks.map((link) => (
-            <Link href={`${link.toLowerCase().replace(/\s+/g, "")}`} key={link}>
+            <Link href={`${link.link}`} key={link}>
               <span className=" transition-colors duration-300 cursor-pointer">
-                {link}
+                {link.name}
               </span>
             </Link>
           ))}
