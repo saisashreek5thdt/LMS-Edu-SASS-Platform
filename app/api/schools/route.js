@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { middleware } from "../middleware";
 
 export async function GET(req) {
@@ -13,11 +13,16 @@ export async function POST(req) {
   }
 
   try {
-    const newSchool = await prisma.school.create({ data: validate.data });
-    return Response.json({
-      message: "School created successfully",
-      data: newSchool,
+    const newSchool = await prisma.school.create({
+      data: validate.data
     });
+    return Response.json(
+      {
+        message: "School created successfully",
+        data: newSchool,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error creating school:", error); // ✅ log the real error
     return Response.json({ error: "Internal server error" }, { status: 500 });
