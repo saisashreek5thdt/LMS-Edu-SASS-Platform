@@ -1,0 +1,139 @@
+.containerTeam{
+    width:100%;
+    max-width:1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 15px;
+    margin: 0 auto;
+  }
+  
+  .cardTeam{
+    position: relative;
+    width: 280px;
+    height: 300px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 15px 60px rgba(0,0,0, .5);
+    border-radius: 15px;
+  }
+  
+  .cardTeam .faceTeam{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cardTeam .faceTeam.face1Team{
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  .cardTeam .faceTeam.face1Team h2{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .cardTeam .faceTeam.face1Team .contentTeam{
+    font-size:1.2em;
+    margin:0;
+    padding:0 0 1em 0;
+    font-weight:500;
+  }
+  
+  .cardTeam .faceTeam.face2Team{
+    background: #111;
+    transition: 0.5s;
+    /* background: linear-gradient(45deg, #F1E7E7, #E69DB8); */
+    background: Black;
+    opacity: 0.3;
+    border-radius: 15px;
+  }
+  
+  /* .card:nth-child(1) .face.face2{
+    background: linear-gradient(45deg, #3503ad, #f7308c);
+    border-radius: 15px;
+  }
+  
+  .card:nth-child(2) .face.face2{
+    background: linear-gradient(45deg, #ccff00, #09afff);
+    border-radius: 15px;
+  }
+  
+  .card:nth-child(3) .face.face2{
+    background: linear-gradient(45deg, #e91e63, #ffeb3b);
+    border-radius: 15px;
+  } */
+  
+  .cardTeam:hover .faceTeam.face2Team{
+    height: 90px;
+    border-radius: 0 0 15px 15px;
+  }
+  
+  .cardTeam .faceTeam.face2Team:before{
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    width: 50%;
+    height: 100%;
+    background: rgba(255,255,255, 0.1);
+    border-radius: 15px 0 0 15px;
+  }
+  
+  .cardTeam .faceTeam.face2Team h2{
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
+    color: #fff;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0,0,0, .2);
+  }
+
+  .cardTeam .faceTeam.face2Team h3{
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    color: #fff;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0,0,0, .2);
+  }
+
+  .cardTeam .faceTeam.face2Team p{
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    color: #fff;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0,0,0, .2);
+  }
+  
+
+  .cardTeam:hover .faceTeam.face2Team h2{
+    font-size: 2em;
+  }
+
+@media (max-width: 480px) {
+      .containerTeam{
+         grid-template-columns:1fr;     
+      }
+      .cardTeam {
+        height: 350px;
+      }
+
+      .cardTeam .faceTeam.face1Team .contentTeam {
+        font-size: 0.9em;
+      }
+
+      .cardTeam .faceTeam.face2Team h2 {
+        font-size: 4em;
+      }
+
+      .cardTeam:hover .faceTeam.face2Team h2 {
+        font-size: 1.5em;
+      }
+    }

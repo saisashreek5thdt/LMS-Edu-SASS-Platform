@@ -1,15 +1,75 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/app/_Context/UserContext";
 
 export default function RegisterForm({ className, ...props }) {
+  const router = useRouter();
+  const { setProfileImage } = useUser();
+  {console.log(setProfileImage)}
+
+  const [userType, setUserType] = useState("");
+  const [logo, setLogo] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let tempErrors = {};
+ 
+    if (!userType) tempErrors.userType = "Please select user type.";
+    if (!logo) tempErrors.logo = "Logo is required.";
+    if (!name.trim()) tempErrors.name = "Full name is required.";
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+      tempErrors.email = "Invalid email address.";
+    if (!generatedOtp || !otpVerified)
+      tempErrors.otp = "OTP must be verified before registration.";
+    if (password.length < 6)
+      tempErrors.password = "Password must be at least 6 characters.";
+    if (password !== confirmPassword)
+      tempErrors.confirmPassword = "Passwords do not match.";
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleVerifyOtp = () => {
+    const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(newOtp);
+    alert(`Your OTP is: ${newOtp}`);
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      alert("Registration successful!");
+      router.push("/signin");
+    }
+  };
+
+  const handleOtpChange = (value) => {
+    setOtp(value);
+    if (value === generatedOtp) {
+      setOtpVerified(true);
+    } else {
+      setOtpVerified(false);
+    }
+  };
+
   return (
     <>
-      <form className={cn("flex flex-col gap-6", className)} {...props}>
+      <form className={cn("flex flex-col gap-6", className)} {...props} onSubmit={handleRegister}>
         <div className="flex flex-col items-center gap-2 text-center">
           <h1 className="text-2xl font-bold">Register to your account</h1>
           <p className="text-balance text-sm text-muted-foreground">
@@ -19,7 +79,10 @@ export default function RegisterForm({ className, ...props }) {
         <div className="grid gap-6">
           <div className="grid gap-2">
             <Label htmlFor="logo">Choose User Type</Label>
-            <RadioGroup className="p-3 grid grid-cols-2">
+            <RadioGroup
+              className="p-3 grid grid-cols-2"
+              onValueChange={setUserType}
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="school" id="school" />
                 <Label htmlFor="school">Schools</Label>
@@ -29,10 +92,25 @@ export default function RegisterForm({ className, ...props }) {
                 <Label htmlFor="tutor">Tutors</Label>
               </div>
             </RadioGroup>
+            {errors.userType && <p className="text-red-500 text-sm">{errors.userType}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="logo">Logo</Label>
-            <Input id="logo" type="file" required />
+            <Input
+              id="logo"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setLogo(file); // Save the file in state
+                  const imageURL = URL.createObjectURL(file); // Generate a preview URL
+                  setProfileImage(imageURL); // 🔥 Set logo as header profile image
+                }
+              }}
+            />
+
+            {errors.logo && <p className="text-red-500 text-sm">{errors.logo}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="fname">Full Name</Label>
@@ -40,8 +118,10 @@ export default function RegisterForm({ className, ...props }) {
               id="fname"
               type="text"
               placeholder="Enter Your Full Name"
-              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -49,31 +129,49 @@ export default function RegisterForm({ className, ...props }) {
               id="email"
               type="email"
               placeholder="username@example.com"
-              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <Button type="submit" className="w-full">
+            <Button type="button" className="w-full" onClick={handleVerifyOtp}>
               Verify
             </Button>
             <Input
               id="verify"
               type="number"
               placeholder="Enter Code..."
-              required
+              value={otp}
+              onChange={(e) => handleOtpChange(e.target.value)}
             />
           </div>
+          {!otpVerified && otp && (
+            <p className="text-red-500 text-sm">OTP incorrect.</p>
+          )}
+          {otpVerified && otp && (
+            <p className="text-green-600 text-sm">OTP Verified ✅</p>
+          )}
+          {errors.otp && <p className="text-red-500 text-sm">{errors.otp}</p>}
           <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-            </div>
-            <Input id="password" type="password" required />
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
           <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="cpassword">Confirm Password</Label>
-            </div>
-            <Input id="cpassword" type="password" required />
+            <Label htmlFor="cpassword">Confirm Password</Label>
+            <Input
+              id="cpassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
           </div>
           <Button type="submit" className="w-full">
             Register
