@@ -1,166 +1,89 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSwipeable } from "react-swipeable";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 
 const defaultSlides = [
-  {
-    src: "/slider/images/slide1.jpg",
-    title: "Welcome to the Event",
-    caption: "This is an awesome event image.",
-  },
-  {
-    src: "/slider/images/slide2.jpg",
-    title: "Great Speakers",
-    caption: "Meet top professionals from the industry.",
-  },
-  {
-    src: "/slider/images/slide3.jpg",
-    title: "Amazing Location",
-    caption: "Hosted in a beautiful city.",
-  },
-  {
-    src: "/slider/images/slide4.jpg",
-    title: "More Moments",
-    caption: "Captured from the event.",
-  },
+  { src: "/slider/images/slide1.jpg" },
+  { src: "/slider/images/slide2.jpg" },
+  { src: "/slider/images/slide3.jpg" },
+  { src: "/slider/images/slide4.jpg" },
 ];
 
-export default function AnimatedImageSlider({ slides = defaultSlides }) {
-  const [[index, direction], setIndex] = useState([0, 0]);
-  const [isPaused, setIsPaused] = useState(false);
-  const timeoutRef = useRef(null);
+export default function AnimatedImageSlider({ images = defaultSlides }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const maxImages = images.slice(0, 5);
+  const intervalRef = useRef(null);
 
-  const paginate = (dir) => {
-    setIndex(([prev]) => {
-      const next = (prev + dir + slides.length) % slides.length;
-      return [next, dir];
-    });
+  const goToNext = () => {
+    setIsLoading(true);
+    setCurrentIndex((prev) => (prev + 1) % maxImages.length);
   };
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => paginate(1),
-    onSwipedRight: () => paginate(-1),
-    trackMouse: true,
-  });
-
-  const imageVariants = {
-    enter: (dir) => ({
-      x: dir > 0 ? 100 : -100,
-      scale: 1.05,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.43, 0.13, 0.23, 0.96],
-      },
-    },
-    exit: (dir) => ({
-      x: dir < 0 ? 100 : -100,
-      scale: 0.95,
-      opacity: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    }),
-  };
-
-  const captionVariants = {
-    initial: { y: 20, opacity: 0 },
-    animate: {
-      y: 0,
-      opacity: 1,
-      transition: { delay: 0.4, duration: 0.6, ease: "easeOut" },
-    },
-    exit: { y: 20, opacity: 0, transition: { duration: 0.3 } },
+  const goToPrev = () => {
+    setIsLoading(true);
+    setCurrentIndex((prev) => (prev - 1 + maxImages.length) % maxImages.length);
   };
 
   useEffect(() => {
-    if (isPaused) return;
-    timeoutRef.current = setTimeout(() => paginate(1), 5000);
-    return () => clearTimeout(timeoutRef.current);
-  }, [index, isPaused]);
+    intervalRef.current = setInterval(goToNext, 5000);
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
-  const handleMouseEnter = () => setIsPaused(true);
-  const handleMouseLeave = () => setIsPaused(false);
-
-  const slide = slides[index];
+  useEffect(() => {
+    const image = new Image();
+    image.src = maxImages[currentIndex].src;
+    image.onload = () => setIsLoading(false);
+  }, [currentIndex]);
 
   return (
-    <div
-      className="relative w-full overflow-hidden"
-      {...handlers}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="relative h-[600px] sm:h-[400px]">
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={index}
-            custom={direction}
-            variants={imageVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="absolute w-full h-full top-0 left-0 flex items-center justify-center bg-black"
-          >
-            <img
-              src={slide.src}
-              alt={slide.title}
-              className="w-full h-full object-cover rounded-md shadow-lg"
-            />
+    <div className="relative w-full max-w-full mx-auto overflow-hidden shadow-md">
+      <div className="relative h-64 md:h-96 flex items-center justify-center bg-black/10">
+        {isLoading ? (
+          <Loader className="w-10 h-10 animate-spin text-blue-600" />
+        ) : (
+          <motion.img
+            key={currentIndex}
+            src={maxImages[currentIndex].src}
+            alt={`Slide ${currentIndex}`}
+            initial={{ opacity: 0.5, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="absolute w-full h-full object-cover"
+          />
+        )}
 
-            {/* Captions */}
-            <motion.div
-              className="absolute bottom-0 left-0 w-full bg-black/60 px-4 py-5 text-white backdrop-blur-sm"
-              variants={captionVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              {/* <h2 className="text-2xl sm:text-lg font-semibold">{slide.title}</h2>
-              <p className="text-sm sm:text-xs">{slide.caption}</p> */}
-
-              {/* Dots under captions */}
-              <div className="flex justify-center mt-3 gap-1">
-                {slides.map((_, i) => (
-                  <motion.span
-                    key={i}
-                    className={cn(
-                      "w-2 h-2 rounded-full transition-all",
-                      i === index ? "bg-white scale-110" : "bg-white/40"
-                    )}
-                    animate={{ opacity: i === index ? 1 : 0.5 }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+        {/* Navigation Arrows */}
+        <button
+          onClick={goToPrev}
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/40 text-white p-2 rounded-full z-10 hover:bg-black/70 transition"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/40 text-white p-2 rounded-full z-10 hover:bg-black/70 transition"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
-      {/* Navigation */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-1/2 left-2 -translate-y-1/2 z-10 sm:left-1"
-        onClick={() => paginate(-1)}
-      >
-        <ChevronLeft />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-1/2 right-2 -translate-y-1/2 z-10 sm:right-1"
-        onClick={() => paginate(1)}
-      >
-        <ChevronRight />
-      </Button>
+      {/* Pagination Dots */}
+      <div className="flex justify-center gap-2 mt-4 pb-4">
+        {maxImages.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => {
+              setIsLoading(true);
+              setCurrentIndex(idx);
+            }}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? "bg-blue-600 scale-125" : "bg-gray-300"
+            }`}
+          ></button>
+        ))}
+      </div>
     </div>
   );
 }
