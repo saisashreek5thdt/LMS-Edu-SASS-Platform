@@ -15,7 +15,30 @@ export default function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const navLinks = ["Home", "Courses", "Team", "Contact Us"];
+  // const navLinks = ["Home", "Courses", "Team", "Contact Us"];
+
+  const navLinks = [
+    {
+      id: 1,
+      name: "Home",
+      link: "/",
+    },
+    {
+      id: 2,
+      name: "Courses",
+      link: "/course",
+    },
+    {
+      id: 3,
+      name: "Team",
+      link: "/team",
+    },
+    {
+      id: 4,
+      name: "Get In Touch",
+      link: "/#footer",
+    },
+  ];
 
   const handleLogout = () => {
     logout(); // Call the logout function from context
@@ -33,9 +56,9 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg">
           {navLinks.map((link) => (
-            <Link href={`/${link.toLowerCase().replace(/\s+/g, "")}`} key={link}>
+            <Link href={link.link} key={link}>
               <span className="transition-colors duration-300 cursor-pointer">
-                {link}
+                {link.name}
               </span>
             </Link>
           ))}
@@ -44,8 +67,6 @@ export default function Header() {
         {/* Right section - desktop */}
         <div className="hidden md:flex items-center gap-6 relative">
           <ShoppingCart className="cursor-pointer hover:text-gray-600 transition-colors duration-300" />
-
-          
 
           {/* Login/Logout Button */}
           {isLoggedIn ? (
@@ -62,8 +83,6 @@ export default function Header() {
               </h2>
             </Link>
           )}
-
-
 
           {/* Profile Image Button */}
           {profileImage && isLoggedIn && (
@@ -128,12 +147,12 @@ export default function Header() {
             <div className="flex flex-col divide-y divide-white/20 dark:divide-gray-600">
               {navLinks.map((link) => (
                 <Link
-                  href={`/${link.toLowerCase().replace(/\s+/g, "")}`}
+                  href={link.link}
                   key={link}
                   onClick={toggleMenu}
                   className="py-3 text-center text-lg hover:bg-red-300 dark:hover:bg-gray-800 transition-colors"
                 >
-                  {link}
+                  {link.name}
                 </Link>
               ))}
               {/* Shopping Cart */}
