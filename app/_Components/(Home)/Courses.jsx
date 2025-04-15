@@ -1,29 +1,98 @@
 import React from "react";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import Link from "next/link";
-import Image from "next/image";
+import CourseCard from "../Courses/CourseCard";
 
-const coursesList = [
+const dummyCourses = [
   {
-    id: 1,
-    tooltipDirection: "right",
+    slug: 1,
+    title: "Next.js Mastery",
+    description: "Become a full-stack Next.js developer.",
+    price: 49.99,
+    skills: ["Next.js", "React", "API Routes"],
+    highlights: ["Build SSR apps", "Learn API routing", "Deploy to Vercel"],
+    instructor: "John Smith",
   },
   {
-    id: 2,
-    tooltipDirection: "right",
+    slug: 2,
+    title: "TailwindCSS Pro",
+    description: "Design fast, responsive UIs effortlessly.",
+    price: 29.99,
+    skills: ["Tailwind", "Responsive Design"],
+    highlights: ["Utility classes", "Real projects", "Dark mode"],
+    instructor: "Sara Lee",
   },
   {
-    id: 3,
-    tooltipDirection: "right",
+    slug: 3,
+    title: "Next.js Mastery",
+    description: "Become a full-stack Next.js developer.",
+    price: 49.99,
+    skills: ["Next.js", "React", "API Routes"],
+    highlights: ["Build SSR apps", "Learn API routing", "Deploy to Vercel"],
+    instructor: "John Smith",
   },
   {
-    id: 4,
-    tooltipDirection: "right",
+    slug: 4,
+    title: "TailwindCSS Pro",
+    description: "Design fast, responsive UIs effortlessly.",
+    price: 29.99,
+    skills: ["Tailwind", "Responsive Design"],
+    highlights: ["Utility classes", "Real projects", "Dark mode"],
+    instructor: "Sara Lee",
   },
   {
-    id: 5,
-    tooltipDirection: "left",
+    slug: 5,
+    title: "Next.js Mastery",
+    description: "Become a full-stack Next.js developer.",
+    price: 49.99,
+    skills: ["Next.js", "React", "API Routes"],
+    highlights: ["Build SSR apps", "Learn API routing", "Deploy to Vercel"],
+    instructor: "John Smith",
   },
+  {
+    slug: 6,
+    title: "TailwindCSS Pro",
+    description: "Design fast, responsive UIs effortlessly.",
+    price: 29.99,
+    skills: ["Tailwind", "Responsive Design"],
+    highlights: ["Utility classes", "Real projects", "Dark mode"],
+    instructor: "Sara Lee",
+  },
+  {
+    slug: 7,
+    title: "Next.js Mastery",
+    description: "Become a full-stack Next.js developer.",
+    price: 49.99,
+    skills: ["Next.js", "React", "API Routes"],
+    highlights: ["Build SSR apps", "Learn API routing", "Deploy to Vercel"],
+    instructor: "John Smith",
+  },
+  {
+    slug: 8,
+    title: "TailwindCSS Pro",
+    description: "Design fast, responsive UIs effortlessly.",
+    price: 29.99,
+    skills: ["Tailwind", "Responsive Design"],
+    highlights: ["Utility classes", "Real projects", "Dark mode"],
+    instructor: "Sara Lee",
+  },
+  {
+    slug: 9,
+    title: "Next.js Mastery",
+    description: "Become a full-stack Next.js developer.",
+    price: 49.99,
+    skills: ["Next.js", "React", "API Routes"],
+    highlights: ["Build SSR apps", "Learn API routing", "Deploy to Vercel"],
+    instructor: "John Smith",
+  },
+  {
+    slug: 10,
+    title: "TailwindCSS Pro",
+    description: "Design fast, responsive UIs effortlessly.",
+    price: 29.99,
+    skills: ["Tailwind", "Responsive Design"],
+    highlights: ["Utility classes", "Real projects", "Dark mode"],
+    instructor: "Sara Lee",
+  },
+  // Add more as needed
 ];
 
 export default function Courses() {
@@ -33,57 +102,10 @@ export default function Courses() {
         UPCOMING COURSES
       </h1>
 
-      {/* Center align the card list */}
-      <div className="flex justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {coursesList.map((course) => (
-            <Link key={course.id} href={`/courses/${course.id}`}>
-              <Tooltip.Provider>
-                <Tooltip.Root>
-                  {/* Tooltip Trigger */}
-                  <Tooltip.Trigger asChild>
-                    <div className="border rounded-xl p-4 w-64 shadow-md hover:shadow-xl transition-shadow duration-300 bg-white cursor-pointer">
-                      <Image
-                        src="https://dummyjson.com/image/200x100"
-                        alt={`Course ${course.id} Thumbnail`}
-                        className="rounded-md w-full object-cover"
-                        width={200}
-                        height={100}
-                      />
-                      <div className="flex flex-col gap-1 mt-3">
-                        <h2 className="font-semibold text-lg">Course Title</h2>
-                        <p className="text-sm text-gray-600">
-                          Course Description
-                        </p>
-                        <p className="text-sm text-gray-700 font-medium">
-                          $49.99
-                        </p>
-                      </div>
-                    </div>
-                  </Tooltip.Trigger>
-
-                  {/* Tooltip Content */}
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      side={course.tooltipDirection}
-                      sideOffset={8}
-                      className="bg-white text-gray-800 shadow-xl rounded-lg p-4 max-w-xs z-50"
-                    >
-                      <div className="flex flex-col gap-2 text-sm">
-                        <p>Add to library: Learn anytime anywhere.</p>
-                        <p>View details</p>
-                        <p>Enroll now</p>
-                        <p>Share with friends</p>
-                        <button className="mt-2 bg-red-500 hover:bg-red-600 transition-colors text-white font-medium rounded-md py-2 px-4">
-                          Add to Cart
-                        </button>
-                      </div>
-                      <Tooltip.Arrow className="fill-white w-4 h-2" />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </Tooltip.Provider>
-            </Link>
+      <div className="flex flex-col items-center justify-center p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {dummyCourses.map((course, idx) => (
+            <CourseCard key={idx} {...course} />
           ))}
         </div>
       </div>
