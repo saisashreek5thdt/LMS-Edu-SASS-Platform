@@ -140,7 +140,7 @@ export default function ExploreCourses() {
         <h1 className="text-3xl font-bold text-center mb-10 text-gray-800">
           Explore Our Courses
         </h1>
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {dummyData.map((course, index) => (
               <CoursesLists key={index} {...course} />

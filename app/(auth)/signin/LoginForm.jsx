@@ -37,7 +37,7 @@ export default function LoginForm({ className, ...props }) {
     if (validateForm()) {
       login(); // Call the login function from UserContext
       alert("Login successful!");
-      router.push("/dashboard"); // Redirect to dashboard after login
+      router.push("/dashboard/01"); // Redirect to dashboard after login
     }
   };
 

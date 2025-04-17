@@ -24,12 +24,12 @@ export default function CoursesLists({
     <>
       <motion.div
         whileHover={{ scale: 1.03 }}
-        className="relative w-full max-w-xs h-[335px] bg-white rounded-2xl shadow-lg overflow-hidden group transition-all duration-300 transform scale-95 hover:scale-100"
+        className="relative w-[280px] max-w-xs h-[335px] bg-white rounded-2xl shadow-lg overflow-hidden group transition-all duration-300 transform scale-95 hover:scale-100 border border-1"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Course Image */}
-        <img src={image} alt="Course" className="w-full h-44 object-cover" />
+        <img src={image} alt="Course" className="w-full h-44 object-cover p-2 rounded-t-2xl" />
 
         {/* Static Content */}
         <div className="p-2">
