@@ -2,6 +2,7 @@ import Footer from "./_Components/Footer";
 import Header from "./_Components/Header";
 import "./globals.css";
 import { UserProvider } from "./_Context/UserContext";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: "LMS Edu Platform",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <Header />
         <main>{children}</main>
         <Footer />
+        <Toaster />
       </body>
     </UserProvider>
     </html>
