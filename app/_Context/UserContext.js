@@ -24,6 +24,34 @@ export const UserProvider = ({ children }) => {
     "rakeshv@5thdt.com": { type: "student" },
   };
 
+  const recreateDatabaseWithStore = () => {
+    return new Promise((resolve, reject) => {
+      // Delete the old DB version
+      const deleteRequest = indexedDB.deleteDatabase("UserDB");
+
+      deleteRequest.onsuccess = () => {
+        const createRequest = indexedDB.open("UserDB", 1);
+
+        createRequest.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          db.createObjectStore("AuthStore");
+        };
+
+        createRequest.onsuccess = (event) => {
+          resolve(event.target.result);
+        };
+
+        createRequest.onerror = (event) => {
+          reject(event.target.error);
+        };
+      };
+
+      deleteRequest.onerror = (event) => {
+        reject(event.target.error);
+      };
+    });
+  };
+
   const openDatabase = () => {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open("UserDB", 1);
@@ -40,7 +68,6 @@ export const UserProvider = ({ children }) => {
       };
 
       request.onerror = (event) => {
-        console.error("IndexedDB open error:", event.target.error);
         reject(event.target.error);
       };
     });
@@ -73,7 +100,14 @@ export const UserProvider = ({ children }) => {
 
     if (isIndexedDBAvailable) {
       try {
-        const db = await openDatabase();
+        let db = await openDatabase();
+
+        // If store doesn't exist, recreate DB with the object store
+        if (!db.objectStoreNames.contains("AuthStore")) {
+          db.close();
+          db = await recreateDatabaseWithStore();
+        }
+
         const tx = db.transaction("AuthStore", "readwrite");
         const store = tx.objectStore("AuthStore");
         store.delete(STORAGE_KEY);
