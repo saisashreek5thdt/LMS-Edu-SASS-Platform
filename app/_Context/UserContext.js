@@ -23,46 +23,62 @@ export const UserProvider = ({ children }) => {
     "rakeshv@5thdt.com": { type: "student" },
   };
 
-  const saveToStorage = (data) => {
-    const payload = {
-      ...data,
-      expiry: Date.now() + TOKEN_EXPIRY_MS,
-    };
-
-    // Local & session storage
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-
-    // Optional: save to IndexedDB
-    if (isIndexedDBAvailable) {
+  const openDatabase = () => {
+    return new Promise((resolve, reject) => {
       const request = indexedDB.open("UserDB", 1);
+
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
         if (!db.objectStoreNames.contains("AuthStore")) {
           db.createObjectStore("AuthStore");
         }
       };
+
       request.onsuccess = (event) => {
-        const db = event.target.result;
+        resolve(event.target.result);
+      };
+
+      request.onerror = (event) => {
+        console.error("IndexedDB open error:", event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  const saveToStorage = async (data) => {
+    const payload = {
+      ...data,
+      expiry: Date.now() + TOKEN_EXPIRY_MS,
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+
+    if (isIndexedDBAvailable) {
+      try {
+        const db = await openDatabase();
         const tx = db.transaction("AuthStore", "readwrite");
         const store = tx.objectStore("AuthStore");
         store.put(payload, STORAGE_KEY);
-      };
+      } catch (err) {
+        console.error("Failed to save to IndexedDB:", err);
+      }
     }
   };
 
-  const clearStorage = () => {
+  const clearStorage = async () => {
     localStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(STORAGE_KEY);
 
     if (isIndexedDBAvailable) {
-      const request = indexedDB.open("UserDB", 1);
-      request.onsuccess = (event) => {
-        const db = event.target.result;
+      try {
+        const db = await openDatabase();
         const tx = db.transaction("AuthStore", "readwrite");
         const store = tx.objectStore("AuthStore");
         store.delete(STORAGE_KEY);
-      };
+      } catch (err) {
+        console.error("Failed to clear from IndexedDB:", err);
+      }
     }
   };
 
