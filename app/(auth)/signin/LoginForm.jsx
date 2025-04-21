@@ -48,17 +48,46 @@ export default function LoginForm({ className, ...props }) {
 
     if (validateForm()) {
       try {
-        const result = await login(email,password);
-        
-        if (result?.id && result?.type) {
-          toast.success(`${result.type} Is Authenticated`);
-          router.push(`/dashboard/${result.id}/${result.type}`);
-        } else {
-          toast.error("Please Check Your Credentials");
-        }
+        // Send a POST request to the backend API
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
 
+        const data = await response.json();
+
+        if (response.ok) {
+          // Login successful
+          const { token, id, userType } = data;
+
+          // Decode the JWT token to extract the `id` and `userType`
+        //  const decodedToken = jwt.decode(token);
+        //  const userId = decodedToken.id; // Extract `id` from the token
+        //  const userRole = decodedToken.userType;
+          // Save the token securely (e.g., in localStorage)
+          localStorage.setItem("authToken", token);
+
+          // Update user context
+          login(email, password);
+
+          // Show success message
+          toast.success(`${userType} Is Authenticated`);
+
+          // Redirect to the dashboard
+          router.push(`/dashboard/${id}/${userType}`);
+        } else {
+          // Login failed
+          toast.error(data.error || "Invalid credentials");
+        }
       } catch (err) {
-        toast.error("An Unexpected Error Occured Please Try Again!!");
+        // Handle network or unexpected errors
+        toast.error("An Unexpected Error Occurred. Please Try Again!");
       }
     } else {
       toast.error("Please Re-Check Your Credentials");

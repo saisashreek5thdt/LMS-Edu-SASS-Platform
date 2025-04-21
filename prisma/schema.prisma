@@ -17,7 +17,7 @@ model School {
   id           Int       @id @default(autoincrement())
   logo         String?
   coverImage   String?
-  name         String    @unique
+  name         String    
   email        String    @unique
   password     String
   address      String
@@ -31,9 +31,9 @@ model School {
 
 model Tutor {
   id           Int       @id @default(autoincrement())
-  image        String?
+  logo         String?
   coverImage   String?
-  name         String    @unique
+  name         String    
   email        String    @unique
   password     String
   phone        String
