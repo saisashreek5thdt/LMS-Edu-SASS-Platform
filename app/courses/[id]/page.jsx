@@ -3,7 +3,7 @@ import Accordian from "@/app/_Components/(Common)/Accordian";
 import CourseInfoCard from "@/app/_Components/Courses/CourseInfoCard";
 import { Button } from "@/components/ui/button";
 import { LibraryBig } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import React from "react";
 
 export default function CourseInfo() {
