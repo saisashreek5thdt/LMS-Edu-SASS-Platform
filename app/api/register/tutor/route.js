@@ -9,6 +9,15 @@ export async function POST(req) {
 
     validateModel("tutor", { name, email, password, address, phone });
 
+    // Check if the email is already registered as a school
+    const existingSchool = await prisma.school.findUnique({ where: { email } });
+    if (existingSchool) {
+      return Response.json(
+        { error: "Email already registered as a school" },
+        { status: 400 }
+      );
+    }
+
     const existingTutor = await prisma.tutor.findUnique({ where: { email } });
     if (existingTutor && existingTutor.isVerified) {
       return Response.json({ error: "Email already registered" }, { status: 400 });
@@ -34,7 +43,12 @@ export async function POST(req) {
       },
     });
 
-    return Response.json({ message: "Tutor registered successfully", data: newTutor }, { status: 201 });
+    return Response.json({
+      message: "Tutor registered successfully",
+      id: newTutor.id,
+      userType: "school",
+      logo: newTutor.logo,
+    }, { status: 201 });
   } catch (error) {
     console.error("Error during tutor registration:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

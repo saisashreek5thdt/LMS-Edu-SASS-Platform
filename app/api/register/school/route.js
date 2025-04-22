@@ -11,6 +11,15 @@ export async function POST(req) {
         return Response.json({ error: "Invalid OTP" }, { status: 400 });
       }
 
+      // Check if the email is already registered as a tutor
+    const existingTutor = await prisma.tutor.findUnique({ where: { email } });
+    if (existingTutor) {
+      return Response.json(
+        { error: "Email already registered as a tutor" },
+        { status: 400 }
+      );
+    }
+
     // Check if the school already exists
     const existingSchool = await prisma.school.findUnique({ where: { email } });
 
@@ -36,11 +45,12 @@ export async function POST(req) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Update the existing record with full data + mark verified
+    
     const updatedSchool = await prisma.school.update({
       where: { email },
       data: {
         name,
-        logo,
+        logo: logo || null,
         phone,
         address,
         password: hashedPassword,
@@ -51,7 +61,11 @@ export async function POST(req) {
     });
 
     return Response.json(
-      { message: "School registered successfully", data: updatedSchool },
+      { message: "School registered successfully", 
+        id: updatedSchool.id,
+        userType:"school",
+        logo: updatedSchool.logo,
+       },
       { status: 201 }
     );
   } catch (error) {

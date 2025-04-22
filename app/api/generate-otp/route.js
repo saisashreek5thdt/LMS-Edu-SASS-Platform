@@ -19,13 +19,13 @@ export async function POST(req) {
     if (userType === "school") {
       await prisma.school.upsert({
         where: { email },
-        update: { otp, otpExpiresAt },
+        update: { otp, otpExpiresAt, isVerified: false},
         create: { email,name,phone,address,isVerified: false, password,otp, otpExpiresAt },
       });
     } else if (userType === "tutor") {
       await prisma.tutor.upsert({
         where: { email },
-        update: { otp, otpExpiresAt },
+        update: { otp, otpExpiresAt,isVerified: false},
         create: { email,name,phone,address,isVerified: false, password,otp, otpExpiresAt},
       });
     } else {
