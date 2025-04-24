@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Image from "next/legacy/image";
 import Link from "next/link";
@@ -18,19 +17,20 @@ const navLinks = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { profileImage, isLoggedIn, logout } = useUser();
+  const { profileImage, isLoggedIn, logout, email } = useUser();
   const router = useRouter();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
+
   const handleLogout = () => {
     logout();
     router.push("/");
   };
 
   const getUserInitial = () => {
-    const name = "User"; // Replace with user's actual name from context if available
-    return name.charAt(0).toUpperCase();
+    if (!email) return "U"; // Default fallback
+    return email.charAt(0).toUpperCase();
   };
 
   return (
@@ -44,8 +44,8 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg">
           {navLinks.map(({ id, name, link }) => (
             <Link
-              href={link}
               key={id}
+              href={link}
               className="transition-colors duration-300 hover:text-gray-600"
             >
               {name}
@@ -56,14 +56,50 @@ export default function Header() {
         {/* Right Desktop Section */}
         <div className="hidden md:flex items-center gap-6 relative">
           <ShoppingCart className="cursor-pointer hover:text-gray-600 transition-colors duration-300" />
-
           {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="font-semibold text-lg hover:text-gray-600 transition-colors duration-300"
-            >
-              Logout
-            </button>
+            <>
+              <button
+                onClick={handleLogout}
+                className="font-semibold text-lg hover:text-gray-600 transition-colors duration-300"
+              >
+                Logout
+              </button>
+              <div className="relative">
+                <button onClick={toggleProfileMenu}>
+                  {profileImage ? (
+                    <Image
+                      src={`data:image/png;base64,${profileImage}`}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="rounded-full border-2 border-[#E69DB8] cursor-pointer"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg border-2 border-[#E69DB8] cursor-pointer">
+                      {getUserInitial()}
+                    </div>
+                  )}
+                </button>
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
+                    <ul className="py-2">
+                      <li
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                        onClick={() => alert("Change Profile Image")}
+                      >
+                        Change Profile Image
+                      </li>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                        onClick={() => alert("Settings")}
+                      >
+                        Settings
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </>
           ) : (
             <Link
               href="/signin"
@@ -71,45 +107,6 @@ export default function Header() {
             >
               Login
             </Link>
-          )}
-
-          {isLoggedIn && (
-            <div className="relative">
-              <button onClick={toggleProfileMenu}>
-                {profileImage ? (
-                  <Image
-                    src={profileImage}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-full border-2 border-[#E69DB8] cursor-pointer"
-                  />
-                ) : (
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg border-2 border-[#E69DB8] cursor-pointer">
-                    {getUserInitial()}
-                  </div>
-                )}
-              </button>
-
-              {isProfileMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
-                  <ul className="py-2">
-                    <li
-                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                      onClick={() => alert("Change Profile Image")}
-                    >
-                      Change Profile Image
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                      onClick={() => alert("Settings")}
-                    >
-                      Settings
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
           )}
         </div>
 
@@ -148,11 +145,9 @@ export default function Header() {
                   {name}
                 </Link>
               ))}
-
               <div className="py-4 flex justify-center items-center gap-4">
                 <ShoppingCart className="cursor-pointer hover:text-gray-100" />
               </div>
-
               <div className="flex py-3 justify-center">
                 {isLoggedIn ? (
                   <button

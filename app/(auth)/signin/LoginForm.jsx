@@ -12,7 +12,6 @@ import { toast } from "sonner";
 export default function LoginForm({ className, ...props }) {
   const router = useRouter();
   const { login } = useUser();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -29,39 +28,40 @@ export default function LoginForm({ className, ...props }) {
   };
 
   const validateForm = () => {
-    let tempErrors = {};
-
+    const tempErrors = {};
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       tempErrors.email = "Please enter a valid email address.";
     }
-
     if (password.length < 6) {
       tempErrors.password = "Password must be at least 6 characters.";
     }
-
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    if (validateForm()) {
-      try {
-        const result = await login(email,password);
-        
-        if (result?.id && result?.type) {
-          toast.success(`${result.type} Is Authenticated`);
-          router.push(`/dashboard/${result.id}/${result.type}`);
-        } else {
-          toast.error("Please Check Your Credentials");
-        }
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-      } catch (err) {
-        toast.error("An Unexpected Error Occured Please Try Again!!");
+      const data = await response.json();
+      if (response.ok) {
+        const { token, id, userType, logo } = data;
+        localStorage.setItem("authToken", token);
+        login({ id, type: userType, email, logo });
+        toast.success(`${userType} Is Authenticated`);
+        router.push(`/dashboard/${id}/${userType}`);
+      } else {
+        toast.error(data.error || "Invalid credentials");
       }
-    } else {
-      toast.error("Please Re-Check Your Credentials");
+    } catch (error) {
+      toast.error("An Unexpected Error Occurred. Please Try Again!");
     }
   };
 
@@ -77,6 +77,7 @@ export default function LoginForm({ className, ...props }) {
           Enter your credentials to access your account
         </p>
       </div>
+
       <div className="grid gap-6">
         <div className="grid gap-2 transition-all duration-300">
           <Label htmlFor="email">Email</Label>
@@ -86,17 +87,13 @@ export default function LoginForm({ className, ...props }) {
             placeholder="username@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={cn(
-              "transition-all duration-300",
-              errors.email ? "border-red-500" : ""
-            )}
+            className={cn(errors.email ? "border-red-500" : "")}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm animate-fade-in">
-              {errors.email}
-            </p>
+            <p className="text-red-500 text-sm animate-fade-in">{errors.email}</p>
           )}
         </div>
+
         <div className="grid gap-2 transition-all duration-300">
           <Label htmlFor="password">Password</Label>
           <Input
@@ -104,17 +101,13 @@ export default function LoginForm({ className, ...props }) {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={cn(
-              "transition-all duration-300",
-              errors.password ? "border-red-500" : ""
-            )}
+            className={cn(errors.password ? "border-red-500" : "")}
           />
           {errors.password && (
-            <p className="text-red-500 text-sm animate-fade-in">
-              {errors.password}
-            </p>
+            <p className="text-red-500 text-sm animate-fade-in">{errors.password}</p>
           )}
         </div>
+
         <Button
           type="submit"
           className="w-full transition-all duration-300"

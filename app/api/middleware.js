@@ -9,9 +9,13 @@ export async function middleware(req, modelName = null) {
       console.log("Incoming Body:", body); // 👈 Add this
 
       validateModel(modelName, body);
+
+      if("userType" in body && !["school","tutor"].includes(body.userType)){
+        throw new Error("Invalid userType");
+      }
       return { success: true, data: body };
     } catch (err) {
-      console.error("Middleware validation error:", err.message);
+      console.error("validation error:", err.message);
       return { success: false, error: err.message };
     }
   }
