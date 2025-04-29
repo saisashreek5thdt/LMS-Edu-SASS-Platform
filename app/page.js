@@ -4,12 +4,16 @@ import NewCardHover from "./_Components/(Home)/NewCardHover";
 import Team from "./_Components/(Home)/Team";
 import Courses from "./_Components/(Home)/Courses";
 import ExploreCourses from "./_Components/(Home)/ExploreCourses";
+import AboutGrid from "./_Components/(Home)/AboutGrid";
+import Clients from "./_Components/(Home)/ClientSection";
 
 export default function Home() {
   return (
     <>
-      <AnimatedSlider />
-      <About />
+      {/* <AnimatedSlider />
+      <About /> */}
+      <AboutGrid/>
+      <Clients/>
       <NewCardHover />
       <Courses />
       <ExploreCourses />
