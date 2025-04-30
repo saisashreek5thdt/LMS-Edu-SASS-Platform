@@ -13,6 +13,26 @@ const faqsData = {
         answer:
           "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
       },
+      {
+        question: "Who can take the Data Science course?",
+        answer:
+          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+      },
+      {
+        question: "Who can take the Data Science course?",
+        answer:
+          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+      },
+      {
+        question: "Who can take the Data Science course?",
+        answer:
+          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+      },
+      {
+        question: "Who can take the Data Science course?",
+        answer:
+          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+      },
     ],
     "Machine Learning Course Curriculum": [
       {
@@ -60,7 +80,7 @@ export default function FAQs() {
       <h1 className="text-3xl font-bold">FAQs</h1>
       <div className="w-[80%] grid grid-cols-[35%_65%] gap-1">
         {/* Left Side: Topics */}
-        <div className="w-full flex flex-col items-center justify-center gap-2">
+        <div className="w-full flex flex-col items-center justify-start gap-2">
           {topics.map((topic) => (
             <div
               key={topic}
@@ -88,7 +108,7 @@ export default function FAQs() {
                 >
                   <h2 className="text-xl font-bold">{item.question}</h2>
                   <span className="text-red-500 text-2xl">
-                    {expandedQuestions[index] ? "−" : "+"}
+                    {expandedQuestions[index] ? "-" : "+"}
                   </span>
                 </div>
                 {expandedQuestions[index] && (
