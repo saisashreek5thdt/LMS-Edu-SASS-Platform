@@ -56,7 +56,7 @@ export default function Header1() {
           top: scrolled ? 0 : "auto",
           left: scrolled ? 0 : "20%",
           borderRadius: scrolled ? "0px" : "9999px",
-          backgroundColor: "#94a3b8",
+          backgroundColor: "rgb(226 232 240)",
           boxShadow: scrolled ? "0 4px 12px rgba(0,0,0,0.1)" : "none",
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -66,12 +66,12 @@ export default function Header1() {
           <Image src="/logo.svg" alt="logo" width={150} height={150} />
         </Link>
 
-        <nav className="hidden md:flex gap-6 items-center font-semibold text-lg text-white">
+        <nav className="hidden md:flex gap-6 items-center font-semibold text-lg text-black">
           {navLinks.map(({ id, name, link }) => (
             <Link
               key={id}
               href={link}
-              className="transition-colors duration-300 hover:text-yellow-50"
+              className="transition-colors duration-300 hover:text-gray-600"
             >
               {name}
             </Link>
@@ -79,7 +79,7 @@ export default function Header1() {
         </nav>
 
         <div className="hidden md:flex items-center gap-6 relative">
-          <ShoppingCart className="cursor-pointer hover:text-yellow-50 transition-colors duration-300" />
+          <ShoppingCart className="cursor-pointer hover:text-gray-600 transition-colors duration-300" />
           {isLoggedIn ? (
             <>
               <button

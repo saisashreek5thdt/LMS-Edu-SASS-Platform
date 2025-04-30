@@ -2,63 +2,64 @@
 import { useState } from "react";
 
 const faqsData = {
-    "Data Science Course Curriculum": [
+    "lorem ipsum dolor": [
       {
-        question: "What is the Data Science Course Curriculum?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "The Data Science Course Curriculum is a comprehensive program designed to equip students with skills in data analysis, machine learning, statistical modeling, and data visualization.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
       {
-        question: "Who can take the Data Science course?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
       {
-        question: "Who can take the Data Science course?",
+       question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
       {
-        question: "Who can take the Data Science course?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
       {
-        question: "Who can take the Data Science course?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
       {
-        question: "Who can take the Data Science course?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "Anyone with an interest in data and basic programming knowledge can enroll in the Data Science course.",
-      },
-    ],
-    "Machine Learning Course Curriculum": [
-      {
-        question: "What will I learn in the Machine Learning course?",
-        answer:
-          "You will learn supervised and unsupervised learning, neural networks, and hands-on ML model training.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
     ],
-    "AI Course Curriculum": [
+    "lorem ipsum dolor2": [
       {
-        question: "Does the AI curriculum cover deep learning?",
-        answer: "Yes, it includes deep learning, NLP, and AI ethics modules.",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        answer:
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
     ],
-    "Full Stack Course Curriculum": [
+    "lorem ipsum dolor3": [
       {
-        question: "What is taught in Full Stack Development?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "You'll learn frontend (HTML/CSS/JS, React), backend (Node.js, Express), and databases (MongoDB, SQL).",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
     ],
-    "Cyber security Course Curriculum": [
+    "lorem ipsum dolor4": [
       {
-        question: "What does the Cyber Security course include?",
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
         answer:
-          "It includes network security, cryptography, ethical hacking, and security protocols.",
+          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
+      },
+    ],
+    "lorem ipsum dolor5": [
+      {
+        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        answer:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
     ],
   };
