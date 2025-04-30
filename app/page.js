@@ -6,6 +6,7 @@ import Courses from "./_Components/(Home)/Courses";
 import ExploreCourses from "./_Components/(Home)/ExploreCourses";
 import AboutGrid from "./_Components/(Home)/AboutGrid";
 import Clients from "./_Components/(Home)/ClientSection";
+import FAQs from "./_Components/(Home)/FAQs";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Courses />
       <ExploreCourses />
       <Team />
+      <FAQs/>
     </>
   );
 }

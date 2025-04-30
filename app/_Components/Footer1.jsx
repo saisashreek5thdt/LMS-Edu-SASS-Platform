@@ -6,7 +6,6 @@ export default function Footer1() {
     return (
         <>
             <div className="grid sm:grid-rows-[40%_60%] md:grid-rows-[50%_50%] lg:grid-cols-[28%_72%] xl:grid-cols-[28%_72%] w-full bg-slate-200 mt-10">
-
                 <div className="flex flex-col p-10 gap-5">
                     <Link href="/" >
                         <Image src="/logo.svg" alt="logo" width={150} height={150} />
