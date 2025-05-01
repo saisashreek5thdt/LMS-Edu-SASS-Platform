@@ -9,10 +9,10 @@ const plans = [
         priceYearly: "4,800",
         rate: "2.5% for 3rd-party payment providers",
         features: [
-            "5 inventory locations",
-            "24/7 email support",
-            "Basic global selling (1 market)",
-            "POS Lite",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
         ],
     },
     {
@@ -22,11 +22,11 @@ const plans = [
         priceYearly: "14,400",
         rate: "1.8% 3rd-party payment providers",
         features: [
-            "20 inventory locations",
-            "24/7 chat and email support",
-            "Localized global selling (3 markets)",
-            "Advanced analytics tools",
-            "POS Lite",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
         ],
         popular: true,
     },
@@ -37,12 +37,12 @@ const plans = [
         priceYearly: "67,200",
         rate: "1% 3rd-party payment providers",
         features: [
-            "Unlimited inventory locations",
-            "24/7 priority support",
-            "Advanced localization (10 markets)",
-            "Custom analytics dashboards",
-            "POS Lite",
-            "20 additional staff accounts",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
+            "Lorem ipsum dolor sit amet",
         ],
     },
 ];
@@ -119,7 +119,7 @@ export default function PricingSection() {
                             <button
                                 className={`mt-auto w-full py-2 px-4 rounded-lg text-sm font-semibold bg-white text-black hover:bg-black hover:text-white border border-gray-300`}
                             >
-                                Start a free trial
+                                Start a free trial  
                             </button>
                         </div>
                     ))}

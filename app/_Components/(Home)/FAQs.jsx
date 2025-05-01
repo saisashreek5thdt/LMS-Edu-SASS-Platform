@@ -8,31 +8,6 @@ const faqsData = {
         answer:
           "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
       },
-      {
-        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        answer:
-          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-      },
-      {
-       question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        answer:
-          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-      },
-      {
-        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        answer:
-          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-      },
-      {
-        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        answer:
-          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-      },
-      {
-        question: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        answer:
-          "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-      },
     ],
     "lorem ipsum dolor2": [
       {
@@ -107,7 +82,7 @@ export default function FAQs() {
                   className="flex justify-between w-full cursor-pointer"
                   onClick={() => toggleAnswer(index)}
                 >
-                  <h2 className="text-xl font-bold">{item.question}</h2>
+                  <h2 className={`text-xl font-bold ${selectedTopic ? "text-blue-400" : "text-black"}`}>{item.question}</h2>
                   <span className="text-red-500 text-2xl">
                     {expandedQuestions[index] ? "-" : "+"}
                   </span>
