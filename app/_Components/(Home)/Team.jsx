@@ -1,5 +1,5 @@
 import Image from 'next/image';
-
+import Link from 'next/link';
 export default function Team() {
   const TeamDetail = [
     {
@@ -33,26 +33,46 @@ export default function Team() {
       ]
     },
     {
-        image: "https://dummyjson.com/image/200x100",
-        teamInfo: [
-          {
-            name: "Alice Johnson",
-            designation: "Product Manager",
-            modules: "30"
-          }
-        ]
-      },
-      {
-        image: "https://dummyjson.com/image/200x100",
-        teamInfo: [
-          {
-            name: "Alice Johnson",
-            designation: "Product Manager",
-            modules: "30"
-          }
-        ]
-      },
-    
+      image: "https://dummyjson.com/image/200x100",
+      teamInfo: [
+        {
+          name: "Alice Johnson",
+          designation: "Product Manager",
+          modules: "30"
+        }
+      ]
+    },
+    {
+      image: "https://dummyjson.com/image/200x100",
+      teamInfo: [
+        {
+          name: "Alice Johnson",
+          designation: "Product Manager",
+          modules: "30"
+        }
+      ]
+    },
+    {
+      image: "https://dummyjson.com/image/200x100",
+      teamInfo: [
+        {
+          name: "Alice Johnson",
+          designation: "Product Manager",
+          modules: "30"
+        }
+      ]
+    },
+    {
+      image: "https://dummyjson.com/image/200x100",
+      teamInfo: [
+        {
+          name: "Alice Johnson",
+          designation: "Product Manager",
+          modules: "30"
+        }
+      ]
+    },
+
   ];
 
   return (
@@ -63,8 +83,8 @@ export default function Team() {
         </h1>
         <div className="grid place-content-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-             
-             {TeamDetail.map((team, index) => (
+
+            {TeamDetail.map((team, index) => (
               <div
                 key={index}
                 className=" bg-white w-64 rounded-2xl overflow-hidden shadow-xl hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 border border-1"
@@ -96,7 +116,23 @@ export default function Team() {
                 </div>
               </div>
             ))}
+
+            <div className=" bg-white w-64 rounded-2xl overflow-hidden shadow-xl hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 border border-1">
+
+              {/* Back Face */}
+              <div className="p-2">
+                <div className="flex flex-col justify-center items-center space-y-2">
+                  <h1 className="text-2xl  font-semibold text-gray-800 text-center flex mt-24">
+                    <Link href="/teams" className="text-indigo-600  hover:underline">
+                      View Team
+                    </Link>
+                  </h1>
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </div>
     </>

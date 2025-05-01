@@ -31,10 +31,10 @@ const plans = [
         popular: true,
     },
     {
-        title: "Advanced",
+        title: "Enterprise",
         subtitle: "Ideal for Scaling Teams",
-        priceMonthly: "7,000",
-        priceYearly: "67,200",
+        priceMonthly: "Contact Us",
+        priceYearly: "Contact Us",
         rate: "1% 3rd-party payment providers",
         features: [
             "Lorem ipsum dolor sit amet",
@@ -91,11 +91,11 @@ export default function PricingSection() {
                                 <hr className="h-1 w-[95%] text-slate-700 text-center" />
                                 <div className="flex items-center justify-center gap-4 mt-3">
                                     <p className="text-4xl font-bold">
-                                        ₹ {billing === "Monthly" ? plan.priceMonthly : plan.priceYearly}
+                                    {plan.title === "Enterprise" ? "": "₹"}  {billing === "Monthly" ? plan.priceMonthly : plan.priceYearly}
                                     </p>
-                                    <p className="text-xs text-gray-500">
+                                    {/* <p className="text-xs text-gray-500">
                                         / per {billing === "Monthly" ? "month" : "year"}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
 
@@ -119,7 +119,7 @@ export default function PricingSection() {
                             <button
                                 className={`mt-auto w-full py-2 px-4 rounded-lg text-sm font-semibold bg-white text-black hover:bg-black hover:text-white border border-gray-300`}
                             >
-                                Start a free trial  
+                               {plan.title === "Enterprise" ? "Contact Us": "Register Now"}  
                             </button>
                         </div>
                     ))}

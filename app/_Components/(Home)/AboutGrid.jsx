@@ -65,10 +65,10 @@ export default function AboutGrid() {
           </div>
           <div className="grid grid-rows-[70%_30%] gap-2">
             <div className="flex justify-center items-center flex-col bg-slate-100 shadow-lg rounded-md">
-              <h1 className="text-2xl text-[#E69DB8]">
+              <h1 className="text-2xl text-black font-bold">
                 About LMS EDU Platform
               </h1>
-              <p className="p-3 text-center text-lg text-[#E69DB8] font-medium ">
+              <p className="p-3 text-center text-lg text-black font-medium ">
                 LMS Edu Platform is an organization that offers innovative,
                 effective and research based products and services that promote
                 authentic learning opportunities relevant for 21st century
