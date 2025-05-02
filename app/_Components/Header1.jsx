@@ -18,7 +18,7 @@ export default function Header1() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { profileImage, isLoggedIn, logout, email } = useUser();
+  const { profileImage, isLoggedIn, logout, email, userId, userType} = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -41,6 +41,12 @@ export default function Header1() {
     if (!email) return "U";
     return email.charAt(0).toUpperCase();
   };
+
+  const updatedNavLinks = navLinks.map(link =>
+    link.name === "Home"
+      ? { ...link, link: isLoggedIn ? `/dashboard/${userId}/${userType}` : "/" }
+      : link
+  );
 
   return (
     <>
@@ -67,7 +73,7 @@ export default function Header1() {
         </Link>
 
         <nav className="hidden md:flex gap-6 items-center font-semibold text-lg text-black">
-          {navLinks.map(({ id, name, link }) => (
+          {updatedNavLinks.map(({ id, name, link }) => (
             <Link
               key={id}
               href={link}

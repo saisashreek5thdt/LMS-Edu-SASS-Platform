@@ -10,6 +10,9 @@ export const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [plan, setPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
   const [email, setEmail] = useState(null); // Store user email
   const STORAGE_KEY = "app-user-auth";
 
@@ -87,13 +90,13 @@ export const UserProvider = ({ children }) => {
 
   // Login function
   const login = (userData) => {
-    const { id, type, email, logo } = userData;
+    const { id, type, email, logo, plan } = userData;
     setIsLoggedIn(true);
     setUserType(type);
     setUserId(id);
     setEmail(email);
     if (logo) setProfileImage(logo); // Set profile image if provided
-    saveToStorage({ id, type, email, logo });
+    saveToStorage({ id, type, email, logo, plan });
   };
 
   // Logout function
@@ -116,6 +119,7 @@ export const UserProvider = ({ children }) => {
         setIsLoggedIn(true);
         setUserType(stored.type);
         setUserId(stored.id);
+        setPlan(stored.plan);
         setEmail(stored.email);
         if (stored.logo) setProfileImage(stored.logo); // Restore profile image
       } else {
@@ -150,6 +154,7 @@ export const UserProvider = ({ children }) => {
         email,
         login,
         logout,
+        plan,
       }}
     >
       {children}

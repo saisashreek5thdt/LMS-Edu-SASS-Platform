@@ -8,6 +8,8 @@ import AboutGrid from "./_Components/(Home)/AboutGrid";
 import Clients from "./_Components/(Home)/ClientSection";
 import FAQs from "./_Components/(Home)/FAQs";
 import PricingSection from "./_Components/(Home)/PricingSection";
+import PricingSection1 from "./_Components/(Home)/PricingSection1";
+import PricingPage from "./pricing/page";
 
 export default function Home() {
   return (
@@ -19,7 +21,9 @@ export default function Home() {
       <NewCardHover />
       <Courses />
       <ExploreCourses />
-      <PricingSection/>
+      {/* <PricingSection/> */}
+      {/* <PricingSection1/> */}
+      <PricingPage/>
       <Team />
       <FAQs/>
     </>

@@ -49,7 +49,26 @@ const plans = [
 
 export default function PricingSection() {
     const [billing, setBilling] = useState("Monthly");
-
+    const handleRegister = (plan) => {
+        const billingType = billing; // 'Monthly' or 'Yearly'
+        const selectedPrice = billingType === "Monthly" ? plan.priceMonthly : plan.priceYearly;
+    
+        if (plan.title === "Enterprise") {
+            alert("Please contact us for Enterprise plans.");
+            return;
+        }
+    
+        // You can also navigate to a register page, or call your backend API
+        console.log("Registering for:", {
+            plan: plan.title,
+            billing: billingType,
+            price: selectedPrice
+        });
+    
+        // Example: call backend API or redirect
+        // router.push(`/register?plan=${plan.title}&billing=${billingType}`);
+    };
+    
     return (
         <section className="w-full bg-gradient-to-b from-white via-[#f2f2fa] to-white py-16 px-4">
             <div className="max-w-6xl mx-auto text-center">
@@ -117,6 +136,7 @@ export default function PricingSection() {
                             </div>
 
                             <button
+                               onClick={() => handleRegister(plan)}
                                 className={`mt-auto w-full py-2 px-4 rounded-lg text-sm font-semibold bg-white text-black hover:bg-black hover:text-white border border-gray-300`}
                             >
                                {plan.title === "Enterprise" ? "Contact Us": "Register Now"}  
