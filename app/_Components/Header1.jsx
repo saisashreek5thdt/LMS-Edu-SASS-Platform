@@ -21,6 +21,8 @@ export default function Header1() {
   const { profileImage, isLoggedIn, logout, email, userId, userType} = useUser();
   const router = useRouter();
 
+  const homeLink = isLoggedIn ? `/dashboard/${userId}/${userType}` : "/";
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
@@ -60,7 +62,7 @@ export default function Header1() {
           marginTop: scrolled ? "" : "80px",
           position: scrolled ? "fixed" : "absolute",
           top: scrolled ? 0 : "auto",
-          left: scrolled ? 0 : "20%",
+          left: scrolled ? "auto" : "20%",
           borderRadius: scrolled ? "0px" : "9999px",
           backgroundColor: "rgb(226 232 240)",
           boxShadow: scrolled ? "0 4px 12px rgba(0,0,0,0.1)" : "none",
@@ -68,7 +70,9 @@ export default function Header1() {
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="z-30 px-4 flex justify-around items-center h-16"
       >
-        <Link href="/" className="flex items-center">
+      
+      
+        <Link href={homeLink} className="flex items-center">
           <Image src="/logo.svg" alt="logo" width={150} height={150} />
         </Link>
 

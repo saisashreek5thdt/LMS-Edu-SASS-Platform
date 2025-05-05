@@ -14,8 +14,8 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
         if (!plansRes.ok) throw new Error("Failed to fetch plans");
         const plansData = await plansRes.json();
         setPlans(plansData);
-        setCurrentPlan(null);
-        console.log(userId + "" + userType + "" + isLoggedIn);
+        // setCurrentPlan(null);
+        // console.log(userId + "" + userType + "" + isLoggedIn);
         // Only fetch current user plan if logged in
         if (isLoggedIn && userType && userId) {
           const planRes = await fetch(`/api/subscribe/${userId}/${userType}`);
