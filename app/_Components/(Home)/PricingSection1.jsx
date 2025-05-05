@@ -7,7 +7,6 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
   const [plans, setPlans] = useState([]);
   const [currentPlan, setCurrentPlan] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,7 +15,7 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
         const plansData = await plansRes.json();
         setPlans(plansData);
         setCurrentPlan(null);
-        console.log(userId + ""+userType+""+isLoggedIn);
+        console.log(userId + "" + userType + "" + isLoggedIn);
         // Only fetch current user plan if logged in
         if (isLoggedIn && userType && userId) {
           const planRes = await fetch(`/api/subscribe/${userId}/${userType}`);
@@ -30,10 +29,9 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
         console.error(error.message);
       }
     };
-  
+
     fetchData();
   }, [userType, userId, isLoggedIn]);
-  
 
   const handleRegister = async (plan) => {
     if (plan.title === "Enterprise") {
@@ -94,68 +92,71 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-          {plans.length > 0 && plans.map((plan, idx) => (
-            <div
-              key={idx}
-              className={`border rounded-xl shadow-md p-2 flex flex-col items-start bg-slate-100 relative transition-all hover:shadow-xl hover:border-black`}
-            >
-            {console.log(plan)}
-              <div className="bg-white p-2 flex items-start justify-start flex-col mb-4 rounded-lg shadow-sm w-full">
-                <div className="flex items-center gap-4 w-full mb-2">
-                  <h3 className="text-xl font-semibold">{plan.title}</h3>
-                  {plan.popular && (
-                    <div className="top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded-full">
-                      Most Popular
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-gray-600 mb-4">{plan.subtitle}</p>
-                <hr className="h-1 w-[95%] text-slate-700 text-center" />
-                <div className="flex items-center justify-center gap-4 mt-3">
-                  <p className="text-4xl font-bold">
-                    {plan.title === "Enterprise" ? "" : "₹"}
-                    {billing === "Monthly" ? plan.priceMonthly : plan.priceYearly}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mb-7 flex flex-col items-start justify-start w-full">
-                <p className="text-xs text-gray-600 uppercase tracking-wider mb-2">
-                  Card Rates From
-                </p>
-                <p className="text-sm text-gray-800">{plan.rate}</p>
-              </div>
-
-              <div className="mb-6 flex flex-col items-start justify-start gap-2 w-full">
-                <p className="text-xs text-gray-600 uppercase tracking-wider mb-2">
-                  Standout Features
-                </p>
-                <ul className="space-y-2 text-sm text-gray-800">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span>✔️</span> {feature.text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <button
-                onClick={() => handleRegister(plan)}
-                disabled={currentPlan?.id === plan.id}
-                className={`mt-auto w-full py-2 px-4 rounded-lg text-sm font-semibold ${
-                  currentPlan?.id === plan.id
-                    ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                    : "bg-white text-black hover:bg-black hover:text-white border border-gray-300"
-                }`}
+          {plans.length > 0 &&
+            plans.map((plan, idx) => (
+              <div
+                key={idx}
+                className={`border rounded-xl shadow-md p-2 flex flex-col items-start bg-slate-100 relative transition-all hover:shadow-xl hover:border-black`}
               >
-                {currentPlan?.id === plan.id
-                  ? "Current Plan"
-                  : plan.title === "Enterprise"
-                  ? "Contact Us"
-                  : "Register Now"}
-              </button>
-            </div>
-          ))}
+                {console.log(plan)}
+                <div className="bg-white p-2 flex items-start justify-start flex-col mb-4 rounded-lg shadow-sm w-full">
+                  <div className="flex items-center gap-4 w-full mb-2">
+                    <h3 className="text-xl font-semibold">{plan.title}</h3>
+                    {plan.popular && (
+                      <div className="top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded-full">
+                        Most Popular
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">{plan.subtitle}</p>
+                  <hr className="h-1 w-[95%] text-slate-700 text-center" />
+                  <div className="flex items-center justify-center gap-4 mt-3">
+                    <p className="text-4xl font-bold">
+                      {plan.title === "Enterprise" ? "" : "₹"}
+                      {billing === "Monthly"
+                        ? plan.priceMonthly
+                        : plan.priceYearly}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-7 flex flex-col items-start justify-start w-full">
+                  <p className="text-xs text-gray-600 uppercase tracking-wider mb-2">
+                    Card Rates From
+                  </p>
+                  <p className="text-sm text-gray-800">{plan.rate}</p>
+                </div>
+
+                <div className="mb-6 flex flex-col items-start justify-start gap-2 w-full">
+                  <p className="text-xs text-gray-600 uppercase tracking-wider mb-2">
+                    Standout Features
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-800">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span>✔️</span> {feature.text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <button
+                  onClick={() => handleRegister(plan)}
+                  disabled={currentPlan?.id === plan.id}
+                  className={`mt-auto w-full py-2 px-4 rounded-lg text-sm font-semibold ${
+                    currentPlan?.id === plan.id
+                      ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                      : "bg-white text-black hover:bg-black hover:text-white border border-gray-300"
+                  }`}
+                >
+                  {currentPlan?.id === plan.id
+                    ? "Current Plan"
+                    : plan.title === "Enterprise"
+                    ? "Contact Us"
+                    : "Register Now"}
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     </section>
