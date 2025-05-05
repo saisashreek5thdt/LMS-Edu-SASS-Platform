@@ -1,27 +1,54 @@
-// app/api/subscribe/[type]/[id]/route.js
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+// File: /app/api/subscribe/[id]/[type]/route.js
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
-export async function GET(request, { params }) {
-  const { type, id } = params; // 'school' or 'tutor', and user ID
+export async function GET(request, context) {
+  const { type, id } = context.params;
 
   try {
-    const subscription = await prisma.subscription.findFirst({
-      where: {
-        [type === "school" ? "schoolId" : "tutorId"]: parseInt(id),
-      },
-      include: {
-        plan: {
-          include: {
-            features: true,
+    const userId = parseInt(id);
+
+    let subscription;
+
+    if (type === 'school') {
+      subscription = await prisma.subscription.findFirst({
+        where: {
+          schoolId: userId,
+          status: 'ACTIVE',
+        },
+        include: {
+          plan: {
+            include: {
+              features: true,
+            },
           },
         },
-      },
-    });
+      });
+    } else if (type === 'tutor') {
+      subscription = await prisma.subscription.findFirst({
+        where: {
+          tutorId: userId,
+          status: 'ACTIVE',
+        },
+        include: {
+          plan: {
+            include: {
+              features: true,
+            },
+          },
+        },
+      });
+    } else {
+      return NextResponse.json({ error: 'Invalid subscription type' }, { status: 400 });
+    }
 
-    return NextResponse.json({ plan: subscription?.plan || null });
+    if (!subscription) {
+      return NextResponse.json({ plan: null });
+    }
+
+    return NextResponse.json({ plan: subscription.plan });
   } catch (error) {
-    console.error("Error fetching subscription:", error);
-    return NextResponse.json({ error: "Failed to fetch plan" }, { status: 500 });
+    console.error('Error fetching subscription:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

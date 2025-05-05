@@ -10,21 +10,30 @@ export default function PricingSection1({ userType, userId, isLoggedIn }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const plansRes = await fetch("http://localhost:3000/api/plans");
-      if (!plansRes.ok) throw new Error("Failed to fetch plans");
-      const plansData = await plansRes.json();
-
-      const planRes = await fetch(`http://localhost:3000/api/subscribe/${userId}/${userType}`);
-      const planData = await planRes.json();
-
-      setPlans(plansData);
-      setCurrentPlan(planData?.plan || null);
+      try {
+        const plansRes = await fetch("/api/plans");
+        if (!plansRes.ok) throw new Error("Failed to fetch plans");
+        const plansData = await plansRes.json();
+        setPlans(plansData);
+        setCurrentPlan(null);
+        console.log(userId + ""+userType+""+isLoggedIn);
+        // Only fetch current user plan if logged in
+        if (isLoggedIn && userType && userId) {
+          const planRes = await fetch(`/api/subscribe/${userId}/${userType}`);
+          if (!planRes.ok) throw new Error("Failed to fetch user plan");
+          const planData = await planRes.json();
+          setCurrentPlan(planData?.plan || null);
+        } else {
+          setCurrentPlan(null); // Clear current plan if not logged in
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
     };
+  
     fetchData();
-    // if (isLoggedIn && userType && userId) {
-      
-    // }
   }, [userType, userId, isLoggedIn]);
+  
 
   const handleRegister = async (plan) => {
     if (plan.title === "Enterprise") {
