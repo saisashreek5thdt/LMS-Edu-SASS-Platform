@@ -10,7 +10,7 @@ import { useUser } from "../_Context/UserContext";
 const navLinks = [
   { id: 1, name: "Home", link: "/" },
   { id: 2, name: "Courses", link: "/course" },
-  { id: 3, name: "Team", link: "/teams" },
+  { id: 3, name: "Instructor", link: "/instructors" },
   { id: 4, name: "Get In Touch", link: "/#footer" },
 ];
 

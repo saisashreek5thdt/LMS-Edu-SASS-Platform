@@ -19,8 +19,8 @@ export default function Home() {
       <AboutGrid/>
       <Clients/>
       <NewCardHover />
-      <Courses />
       <ExploreCourses />
+      <Courses />      
       {/* <PricingSection/> */}
       {/* <PricingSection1/> */}
       <PricingPage/>
