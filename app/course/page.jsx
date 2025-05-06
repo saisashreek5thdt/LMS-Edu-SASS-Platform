@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import React, { useState } from "react";
 import CourseCard from "../_Components/Courses/CourseCard";
 import Link from 'next/link';

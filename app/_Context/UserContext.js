@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
@@ -40,6 +41,7 @@ export const UserProvider = ({ children }) => {
   const openDatabase = () => {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open("UserDB", 1);
+
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
         if (!db.objectStoreNames.contains("AuthStore")) {
