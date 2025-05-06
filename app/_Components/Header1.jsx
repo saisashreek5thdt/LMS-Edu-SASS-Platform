@@ -67,7 +67,7 @@ export default function Header1() {
           backgroundColor: "rgb(226 232 240)",
           boxShadow: scrolled ? "0 4px 12px rgba(0,0,0,0.1)" : "none",
         }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        transition={{ duration: 0.1, ease: "easeInOut" }}
         className="z-30 px-4 flex justify-around items-center h-16"
       >
       
