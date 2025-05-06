@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { LibraryBig } from "lucide-react";
 import Image from "next/legacy/image";
 import React from "react";
+import Link from "next/link";
+import MyCourses2 from "@/app/myCourses/page";
 
 export default function CourseInfo() {
   const moduleData = [
@@ -90,10 +92,12 @@ export default function CourseInfo() {
               </div>
 
               {/* Add to Cart Button */}
+              <Link href={`/myCourses`} >
               <Button variant="outline" className="w-fit gap-2">
                 <LibraryBig strokeWidth={2} />
                 Add To Cart
               </Button>
+              </Link>
             </div>
           </div>
         </div>

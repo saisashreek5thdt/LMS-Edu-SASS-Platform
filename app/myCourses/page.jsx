@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 
-export default function MyCourses() {
+export default function MyCourses2() {
     const initialVideos = [
         { id: 1, title: "Introduction", src: "/slider/images/aboutEvent1.mp4" },
         { id: 2, title: "Mastering Tools", src: "/slider/images/aboutEvent1.mp4" },

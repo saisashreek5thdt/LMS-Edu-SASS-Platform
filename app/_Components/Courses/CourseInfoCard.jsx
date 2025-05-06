@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import {
   BadgeCheck,
@@ -54,6 +55,7 @@ export default function CourseInfoCard({
 
         {/* Button */}
         <div>
+        <Link href={`/myCourses`} >
           <button
             onClick={onAddToCart}
             className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition duration-300"
@@ -61,6 +63,7 @@ export default function CourseInfoCard({
             <ShoppingCart size={20} />
             Add to Cart
           </button>
+          </Link>
         </div>
       </div>
     </>
