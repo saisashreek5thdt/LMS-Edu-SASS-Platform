@@ -1,8 +1,28 @@
+/* Google Font Import */
+@import url("https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
 @layer base {
+  html,
+  body {
+    font-family: "National Park" !important;
+  }
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;

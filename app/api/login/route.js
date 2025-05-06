@@ -69,6 +69,7 @@ export async function POST(req) {
         token,
         id: user.id.toString(),
         userType: userType,
+        logo: user.logo,
       },
       { status: 200 }
     );

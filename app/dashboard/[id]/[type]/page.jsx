@@ -2,6 +2,7 @@
 import { useParams } from "next/navigation";
 import React from "react";
 import { useRouter } from "next/navigation";
+import FeatureList from "../../../_Components/(Home)/FeatureList";
 
 export default function Dashboard() {
   const params = useParams();
@@ -31,6 +32,8 @@ export default function Dashboard() {
           Bulk Upload Students/Teachers
         </button>
       )}
+
+      <FeatureList/>
     </div>
   );
 }

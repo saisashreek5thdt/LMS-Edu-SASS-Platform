@@ -60,7 +60,7 @@ export default function NewCardHover() {
                   initial={{ opacity: 0, y: 50 }} // Starts hidden and below
                   whileHover={{ opacity: 1, y: 0 }} // Fades in and moves to center
                   transition={{ duration: 0.5, ease: 'easeOut' }}
-                  className="relative z-10 p-8 flex flex-col justify-center items-center h-full text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="relative z-10 p-4 flex flex-col justify-center items-center h-full text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 >
                   <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                     {card.title}

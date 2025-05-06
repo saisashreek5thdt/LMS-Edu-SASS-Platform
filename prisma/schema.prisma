@@ -27,6 +27,7 @@ model School {
   otpExpiresAt DateTime?
   teachers     Teacher[]
   students     Student[]
+  subscription Subscription? 
 }
 
 model Tutor {
@@ -41,6 +42,7 @@ model Tutor {
   isVerified   Boolean   @default(false)
   otp          String?
   otpExpiresAt DateTime?
+  subscription Subscription? 
 }
 
 model Teacher {
@@ -61,4 +63,38 @@ model Student {
   password   String
   isVerified Boolean @default(false)
   school     School  @relation(fields: [schoolId], references: [id])
+}
+
+model Plan {
+  id           Int       @id @default(autoincrement())
+  title        String    // e.g., "Basic", "Professional"
+  subtitle     String?   // Optional description
+  priceMonthly Int?      // Price in INR cents or rupees (decide format)
+  priceYearly  Int?      
+  rate         String?   // Card rate text
+  popular      Boolean   @default(false)
+  features     Feature[] // List of features for the plan
+  subscriptions Subscription[]
+  createdAt    DateTime  @default(now())
+}
+
+model Feature {
+  id      Int    @id @default(autoincrement())
+  text    String // e.g., "Unlimited Teachers", "Bulk Upload"
+  planId  Int
+  plan    Plan   @relation(fields: [planId], references: [id])
+}
+
+// One-to-One relation between School/Tutor and their current Plan
+model Subscription {
+  id         Int      @id @default(autoincrement())
+  planId     Int
+  schoolId   Int?     @unique
+  tutorId    Int?     @unique
+  plan       Plan     @relation(fields: [planId], references: [id])
+  school     School?  @relation(fields: [schoolId], references: [id])
+  tutor      Tutor?   @relation(fields: [tutorId], references: [id])
+  startDate  DateTime @default(now())
+  endDate    DateTime?
+  status     String   @default("active")
 }

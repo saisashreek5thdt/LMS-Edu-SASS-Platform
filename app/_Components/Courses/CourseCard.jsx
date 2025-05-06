@@ -113,7 +113,7 @@ export default function CourseCard({
           {/* Desktop Tooltip */}
           {!isMobile && hovered && (
             <div
-              className={`absolute z-50 top-0 w-80 bg-white shadow-2xl border rounded-xl p-4 transition-all duration-300 animate-fade-in
+              className={`absolute z-20 top-0 w-80 bg-white shadow-2xl border rounded-xl p-4 transition-all duration-300 animate-fade-in
               ${flip ? "right-full mr-4" : "left-full ml-4"} hidden md:block`}
             >
               {renderPreviewContent()}

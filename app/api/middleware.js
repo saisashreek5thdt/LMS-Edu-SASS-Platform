@@ -1,4 +1,5 @@
-import { validateModel } from "@/lib/validation";
+import { validateModel } from "@/lib/validation";  
+import { NextResponse } from "next/server";
 
 export async function middleware(req, modelName = null) {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
@@ -21,4 +22,9 @@ export async function middleware(req, modelName = null) {
   }
 
   return { success: true };
+}
+
+
+function errorResponse(message, status = 400) {
+  return NextResponse.json({ success: false, error: message }, { status });
 }

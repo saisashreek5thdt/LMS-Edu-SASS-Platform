@@ -3,6 +3,8 @@ import Header from "./_Components/Header";
 import "./globals.css";
 import { UserProvider } from "./_Context/UserContext";
 import { Toaster } from "@/components/ui/sonner";
+import Header1 from "./_Components/Header1";
+import Footer1 from "./_Components/Footer1";
 
 export const metadata = {
   title: "LMS Edu Platform",
@@ -15,9 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
     <UserProvider>
       <body>
-        <Header />
+        <Header1 />
         <main>{children}</main>
-        <Footer />
+        <Footer1/>
         <Toaster />
       </body>
     </UserProvider>
