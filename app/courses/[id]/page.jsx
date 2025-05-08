@@ -7,8 +7,10 @@ import Image from "next/legacy/image";
 import React from "react";
 import Link from "next/link";
 import MyCourses2 from "@/app/myCourses/page";
+import { useUser } from "@/app/_Context/UserContext";
 
 export default function CourseInfo() {
+  const { login } = useUser();
   const moduleData = [
     {
       title: "Module 1: React Basics",
@@ -92,12 +94,28 @@ export default function CourseInfo() {
               </div>
 
               {/* Add to Cart Button */}
-              <Link href={`/myCourses`} >
+              {/* {login && <Link href={`/myCourses`} >
               <Button variant="outline" className="w-fit gap-2">
                 <LibraryBig strokeWidth={2} />
                 Add To Cart
               </Button>
-              </Link>
+              </Link>} */}
+
+              {
+                login ? (
+                  <Link href="/myCourses">
+                    <Button variant="outline" className="w-fit gap-2">
+                      <LibraryBig strokeWidth={2} />
+                      Add To Cart
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button variant="outline" className="w-fit gap-2" disabled>
+                    <LibraryBig strokeWidth={2} />
+                    Add To Cart
+                  </Button>
+                )
+              }
             </div>
           </div>
         </div>
@@ -146,7 +164,7 @@ export default function CourseInfo() {
                 modules={8}
                 topics={36}
                 ratings={`4.8 (120)`}
-                onAddToCart={() => {}}
+                onAddToCart={() => { }}
                 certification={true}
               />
             </div>
