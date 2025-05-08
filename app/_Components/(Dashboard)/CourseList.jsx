@@ -23,7 +23,7 @@ export default function CourseList() {
             </h3>
           </div>
         </div>
-        <div className="my-2 px-5 mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="my-2 px-5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <div className="flex justify-around items-center gap-5 p-3 bg-slate-200 rounded-lg shadow-md">
             <Image
               src="/favicon.png"

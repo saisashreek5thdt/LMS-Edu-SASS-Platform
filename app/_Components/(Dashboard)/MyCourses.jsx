@@ -22,7 +22,7 @@ export default function MyCourses() {
             <FiChevronRight />
           </h3>
         </div>
-        <div className="p-3 grid grid-cols-1 md:grid-cols-3 justify-around items-center gap-4">
+        <div className="p-3 grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3  lg:grid-cols-4 justify-around items-center gap-4">
           <h3 className="flex justify-center items-center gap-3 text-xl">
             <FiBookOpen />
             Total Courses: <span className="font-semibold">85</span>
@@ -36,7 +36,8 @@ export default function MyCourses() {
             Completed Courses: <span className="font-semibold">85</span>
           </h3>
         </div>
-        <div className="my-2 px-5 mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="my-2 px-5 mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
           <div className="flex justify-around items-center gap-5 p-3 bg-slate-200 rounded-lg shadow-md">
             <Image
               src="/favicon.png"
@@ -56,6 +57,7 @@ export default function MyCourses() {
               <h3 className="flex gap-3 text-lg">Progress: 40%</h3>
             </div>
           </div>
+
           <div className="flex justify-around items-center gap-5 p-3 bg-slate-200 rounded-lg shadow-md">
             <Image
               src="/favicon.png"
