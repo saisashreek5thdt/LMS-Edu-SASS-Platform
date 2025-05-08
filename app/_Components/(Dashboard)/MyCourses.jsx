@@ -46,7 +46,9 @@ export default function MyCourses() {
               className="w-24 h-24"
             />
             <div className="flex flex-col justify-start gap-4">
-              <h3 className="flex gap-3 text-2xl font-semibold">Course Title</h3>
+              <h3 className="flex gap-3 text-2xl font-semibold">
+                Course Title
+              </h3>
               <h4 className="flex justify-start items-center gap-3 text-lg">
                 <FiBookOpen />
                 15 Modules
@@ -63,7 +65,9 @@ export default function MyCourses() {
               className="w-24 h-24"
             />
             <div className="flex flex-col justify-start gap-4">
-              <h3 className="flex gap-3 text-2xl font-semibold">Course Title</h3>
+              <h3 className="flex gap-3 text-2xl font-semibold">
+                Course Title
+              </h3>
               <h4 className="flex justify-start items-center gap-3 text-lg">
                 <FiBookOpen />
                 15 Modules
@@ -80,7 +84,9 @@ export default function MyCourses() {
               className="w-24 h-24"
             />
             <div className="flex flex-col justify-start gap-4">
-              <h3 className="flex gap-3 text-2xl font-semibold">Course Title</h3>
+              <h3 className="flex gap-3 text-2xl font-semibold">
+                Course Title
+              </h3>
               <h4 className="flex justify-start items-center gap-3 text-lg">
                 <FiBookOpen />
                 15 Modules
@@ -97,7 +103,9 @@ export default function MyCourses() {
               className="w-24 h-24"
             />
             <div className="flex flex-col justify-start gap-4">
-              <h3 className="flex gap-3 text-2xl font-semibold">Course Title</h3>
+              <h3 className="flex gap-3 text-2xl font-semibold">
+                Course Title
+              </h3>
               <h4 className="flex justify-start items-center gap-3 text-lg">
                 <FiBookOpen />
                 15 Modules
@@ -114,7 +122,9 @@ export default function MyCourses() {
               className="w-24 h-24"
             />
             <div className="flex flex-col justify-start gap-4">
-              <h3 className="flex gap-3 text-2xl font-semibold">Course Title</h3>
+              <h3 className="flex gap-3 text-2xl font-semibold">
+                Course Title
+              </h3>
               <h4 className="flex justify-start items-center gap-3 text-lg">
                 <FiBookOpen />
                 15 Modules
