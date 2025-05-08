@@ -18,6 +18,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import OverviewInfo from "@/app/_Components/(Dashboard)/OverviewInfo";
 import MyCourses from "@/app/_Components/(Dashboard)/MyCourses";
 import MyCertifications from "@/app/_Components/(Dashboard)/MyCertifications";
+import CourseList from "@/app/_Components/(Dashboard)/CourseList";
+import Assesment from "@/app/_Components/(Dashboard)/Assesment";
 
 // Tab Data
 const tabsData = [
@@ -29,6 +31,8 @@ const tabsData = [
       <>
         <OverviewInfo />
         <MyCourses />
+        <CourseList />
+        <Assesment />
       </>
     ),
   },
@@ -36,13 +40,18 @@ const tabsData = [
     id: "MyCourses",
     name: "MyCourses",
     icon: <FiBook />,
-    content: <p>This is MyCourse Section</p>,
+    content: (
+      <>
+        <MyCourses />
+        <CourseList />
+      </>
+    ),
   },
   {
     id: "Assesment",
     name: "Assesment",
     icon: <FiFileText />,
-    content: <p>This is Assesment Section</p>,
+    content: <Assesment />,
   },
   {
     id: "Discussion",
@@ -56,7 +65,7 @@ const tabsData = [
     icon: <FiBookOpen />,
     content: (
       <>
-        <MyCertifications/>
+        <MyCertifications />
       </>
     ),
   },
@@ -123,7 +132,7 @@ export default function Dashboard() {
             <FiChevronLeft size={20} />
           </button>
           <div className="flex-grow flex justify-center items-center text-[#e9327c]">
-          <span className="mr-2">{tabsData[activeTabIndex].icon}</span>
+            <span className="mr-2">{tabsData[activeTabIndex].icon}</span>
             <span className="text-sm font-medium">
               {tabsData[activeTabIndex].name}
             </span>
