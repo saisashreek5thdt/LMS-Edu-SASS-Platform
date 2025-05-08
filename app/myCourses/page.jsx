@@ -4,6 +4,7 @@ import { MdSaveAlt } from "react-icons/md";
 import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
+import Link from "next/link";
 
 export default function MyCourses2() {
     const initialVideos = [
@@ -11,14 +12,12 @@ export default function MyCourses2() {
         { id: 2, title: "Mastering Tools", src: "/slider/images/aboutEvent1.mp4" },
         { id: 3, title: "Advanced Techniques", src: "/slider/images/aboutEvent1.mp4" },
     ];
-
     const [videos, setVideos] = useState(initialVideos.map(v => ({ ...v, duration: 0 })));
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [completionStatus, setCompletionStatus] = useState(Array(initialVideos.length).fill(false));
     const [progress, setProgress] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
-
     const videoRef = useRef(null);
 
     // Load video metadata and save duration
@@ -34,13 +33,11 @@ export default function MyCourses2() {
     const togglePlayPause = () => {
         const video = videoRef.current;
         if (!video) return;
-
         if (isPlaying) {
             video.pause();
         } else {
             video.play().catch(err => console.error("Play failed:", err));
         }
-
         setIsPlaying(!isPlaying);
     };
 
@@ -48,9 +45,7 @@ export default function MyCourses2() {
     const handleTimeUpdate = () => {
         const video = videoRef.current;
         if (!video || !video.duration) return;
-
         const percentWatched = (video.currentTime / video.duration) * 100;
-
         if (percentWatched >= 97 && !completionStatus[currentVideoIndex]) {
             const newStatus = [...completionStatus];
             newStatus[currentVideoIndex] = true;
@@ -81,7 +76,6 @@ export default function MyCourses2() {
         if (nextIndex < videos.length) {
             setCurrentVideoIndex(nextIndex);
             setVideoEnded(false);
-
             setTimeout(() => {
                 if (videoRef.current) {
                     videoRef.current.play()
@@ -137,7 +131,6 @@ export default function MyCourses2() {
                     <div className="">My Course {`>`} Mastering {`>`} Course</div>
                     {/* Title */}
                     <div className="text-4xl font-bold">{videos[currentVideoIndex].title}</div>
-
                     {/* Video Player */}
                     <div className="w-full h-auto bg-slate-300 rounded-lg overflow-hidden relative">
                         <video
@@ -172,7 +165,6 @@ export default function MyCourses2() {
                             </div>
                         )}
                     </div>
-
                     {/* Profile Info */}
                     <div className="flex justify-between items-center w-full mt-2">
                         <div className="flex items-center gap-2">
@@ -191,7 +183,6 @@ export default function MyCourses2() {
                         </div>
                         <div className="text-2xl cursor-pointer"><MdSaveAlt /></div>
                     </div>
-
                     {/* About This Course */}
                     <div className="flex flex-col gap-2">
                         <h3 className="text-2xl font-bold">About this course</h3>
@@ -199,7 +190,6 @@ export default function MyCourses2() {
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum deserunt odio doloribus atque incidunt...
                         </p>
                     </div>
-
                     {/* Suitability Section */}
                     <div className="flex flex-col gap-2">
                         <h3 className="text-2xl font-bold">This Course Suit For:</h3>
@@ -215,18 +205,39 @@ export default function MyCourses2() {
 
                 {/* Right Sidebar */}
                 <div className="flex flex-col items-start gap-4 w-full">
-                    {/* Progress Bar */}
-                    <div className="bg-white shadow-md rounded-lg p-4 w-full flex flex-col">
-                        <h3 className="text-2xl font-bold">
-                            Your Study Progress <span>{Math.round(progress)}%</span>
-                        </h3>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                            <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${progress}%` }} />
+                    {/* Conditional Progress or Certificate Section */}
+                    {progress < 100 ? (
+                        <div className="bg-white shadow-md rounded-lg p-4 w-full flex flex-col">
+                            <h3 className="text-2xl font-bold">
+                                Your Study Progress <span>{Math.round(progress)}%</span>
+                            </h3>
+                            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                                <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${progress}%` }} />
+                            </div>
+                            <div className="border border-gray-200 p-2 rounded-lg w-full bg-slate-50 text-sm mt-2">
+                                You are on track! Keep going to unlock more milestones.
+                            </div>
                         </div>
-                        <div className="border border-gray-200 p-2 rounded-lg w-full bg-slate-50 text-sm mt-2">
-                            You are on track! Keep going to unlock more milestones.
+                    ) : (
+                        <div className="bg-gradient-to-br from-green-50 to-emerald-100 shadow-md rounded-lg p-6 w-full flex flex-col items-center text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-16 h-16 text-green-600 mb-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Congratulations!</h3>
+                            <p className="text-lg text-gray-600 mb-4">
+                                You've successfully completed the course. Download your certificate below.
+                            </p>
+                            <button
+                                onClick={() => alert("Downloading your certificate...")}
+                                className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                                <span className="font-medium">Download Certificate (PDF)</span>
+                            </button>
                         </div>
-                    </div>
+                    )}
 
                     {/* Course Completion Count */}
                     <div className="flex items-center justify-between p-4 w-full">
