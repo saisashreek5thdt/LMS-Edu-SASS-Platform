@@ -20,6 +20,8 @@ import MyCourses from "@/app/_Components/(Dashboard)/MyCourses";
 import MyCertifications from "@/app/_Components/(Dashboard)/MyCertifications";
 import CourseList from "@/app/_Components/(Dashboard)/CourseList";
 import Assesment from "@/app/_Components/(Dashboard)/Assesment";
+import Discussion from "@/app/_Components/(Dashboard)/Discussion";
+import DiscussionOverview from "@/app/_Components/(Dashboard)/DiscussionOverview";
 
 // Tab Data
 const tabsData = [
@@ -33,6 +35,7 @@ const tabsData = [
         <MyCourses />
         <CourseList />
         <Assesment />
+        <DiscussionOverview/>
       </>
     ),
   },
@@ -57,7 +60,11 @@ const tabsData = [
     id: "Discussion",
     name: "Discussion",
     icon: <FiMessageCircle />,
-    content: <p>This is Discussion Section</p>,
+    content: (
+      <>
+        <Discussion/>
+      </>
+    ),
   },
   {
     id: "Certificate",
