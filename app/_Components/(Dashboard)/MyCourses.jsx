@@ -22,9 +22,9 @@ export default function MyCourses() {
             <FiChevronRight />
           </h3>
         </div>
-        <div className="p-3 grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3  lg:grid-cols-4 justify-around items-center gap-4">
+        <div className="p-3 flex justify-around items-center gap-4">
           <h3 className="flex justify-center items-center gap-3 text-xl">
-            <FiBookOpen />
+            <FiBookOpen /> 
             Total Courses: <span className="font-semibold">85</span>
           </h3>
           <h3 className="flex justify-center items-center gap-3 text-xl">

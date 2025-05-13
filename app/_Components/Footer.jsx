@@ -16,7 +16,9 @@ export default function Footer() {
               width={70}
               height={70}
             />
+           
           </div>
+          
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-2 mb-5 lg:gap-6">
             <p className="bg-white p-1 flex justify-center items-center rounded-xl cursor-pointer">
               <Instagram size={24} />

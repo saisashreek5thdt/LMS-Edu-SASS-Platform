@@ -21,7 +21,6 @@ import MyCertifications from "@/app/_Components/(Dashboard)/MyCertifications";
 import CourseList from "@/app/_Components/(Dashboard)/CourseList";
 import Assesment from "@/app/_Components/(Dashboard)/Assesment";
 import Discussion from "@/app/_Components/(Dashboard)/Discussion";
-import DiscussionOverview from "@/app/_Components/(Dashboard)/DiscussionOverview";
 
 // Tab Data
 const tabsData = [
@@ -35,7 +34,7 @@ const tabsData = [
         <MyCourses />
         <CourseList />
         <Assesment />
-        <DiscussionOverview/>
+        <Discussion/>
       </>
     ),
   },
@@ -112,12 +111,12 @@ export default function Dashboard() {
 
   return (
     <div className="px-2 w-full mt-14">
-      {/* <h1 className="text-2xl font-bold">Hello, this is Dashboard</h1>
+      <h1 className="text-2xl font-bold">Hello, this is Dashboard</h1>
       <p>User ID: {userId}</p>
-      <p>User Type: {userType}</p> */}
+      <p>User Type: {userType}</p>
 
       {/* Show bulk upload button only if the user type is "school" */}
-      {/* {userType === "school" && (
+      {userType === "school" && (
         <button
           onClick={handleBulkUpload}
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
@@ -126,7 +125,7 @@ export default function Dashboard() {
         </button>
       )}
 
-      <FeatureList /> */}
+      <FeatureList />
 
       <div className="mt-3 w-full min-h-screen bg-slate-50 px-4">
         {/* Mobile Tabs with Arrows */}

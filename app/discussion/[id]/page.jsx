@@ -1,188 +1,151 @@
+// app/discussion/[id]/page.js
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FiChevronLeft } from "react-icons/fi";
-import { FaRegCommentDots } from "react-icons/fa6";
 
 export default function DiscussionDetails({ params }) {
-    const router = useRouter();
-    const { id } = params;
+  const router = useRouter();
+  const { id } = params;
+  const [discussion, setDiscussion] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [isTeacher, setIsTeacher] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    // Simulated topics data
-    const initialTopics = [
-        {
-            id: 1,
-            title: "How to create a design system?",
-            author: "design New Member",
-            createdAt: "25 minutes ago",
-            comments: 20,
-            category: "Design",
-            description: "A comprehensive guide to building scalable and maintainable design systems.",
-        },
-        {
-            id: 2,
-            title: "User testing feedback important?",
-            author: "ux researcher",
-            createdAt: "20 minutes ago",
-            comments: 10,
-            category: "Product Management",
-            description: "Discuss the importance of user testing in the design process.",
-        },
-        {
-            id: 3,
-            title: "Collaborating in Figma with remote teams?",
-            author: "product manager",
-            createdAt: "15 minutes ago",
-            comments: 30,
-            category: "Development",
-            description: "Tips and best practices for effective collaboration in Figma with remote teams.",
-        },
-        {
-            id: 4,
-            title: "Best plugins for Figma?",
-            author: "graphic designer",
-            createdAt: "10 minutes ago",
-            comments: 25,
-            category: "Tools",
-            description: "Recommendations for enhancing productivity in Figma.",
-        },
-        {
-            id: 5,
-            title: "Figma to code workflow",
-            author: "web developer",
-            createdAt: "5 minutes ago",
-            comments: 18,
-            category: "Development",
-            description: "Best practices for converting Figma designs into code.",
-        },
-    ];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const token = localStorage.getItem("token");
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        setIsTeacher(decoded.role === "teacher");
 
-    // State for sorting and filtering
-    const [sortBy, setSortBy] = useState("createdAt");
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+        const res = await fetch(`/api/discussion/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setDiscussion(data);
 
-    // Available categories (auto-generated from topics)
-    const allCategories = ["All", ...new Set(initialTopics.map((t) => t.category))];
+        const commentsRes = await fetch(`/api/discussion/${id}/comments`);
+        const commentsData = await commentsRes.json();
+        setComments(commentsData);
+      } catch (e) {
+        console.error("Error fetching data", e);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-    // Filter and sort topics
-    const filteredTopics = selectedCategory
-        ? initialTopics.filter((topic) => topic.category === selectedCategory)
-        : initialTopics;
+    fetchData();
+  }, [id]);
 
-    const sortedTopics = [...filteredTopics].sort((a, b) => {
-        if (sortBy === "createdAt") {
-            return new Date(b.createdAt) - new Date(a.createdAt); // Newest first
-        }
-        return 0;
+  const handleCommentSubmit = async () => {
+    if (!newComment.trim()) return;
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("/api/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        discussionId: parseInt(id),
+        content: newComment,
+      }),
     });
 
-    // Handle click on category
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category === "All" ? "" : category);
-        setShowCategoryMenu(false);
-    };
+    if (res.ok) {
+      const newCommentData = await res.json();
+      setComments([...comments, newCommentData.data]);
+      setNewComment("");
+    } else {
+      alert("Failed to post comment");
+    }
+  };
 
-    return (
-        <div className="mt-14 px-4 sm:px-3 md:px-5 lg:px-28 xl:px-28 w-full h-full p-4">
-            {/* Back Button */}
-            <div className="flex items-center gap-2 mb-4">
-                <button
-                    onClick={() => router.back()}
-                    className="flex items-center gap-2 text-lg font-medium text-gray-600 hover:text-gray-800"
-                >
-                    <FiChevronLeft /> Back
-                </button>
+  const handleCloseDiscussion = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`/api/discussion/${id}/close`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.ok) {
+      const updated = await res.json();
+      setDiscussion(updated.data);
+    } else {
+      alert("Failed to close discussion");
+    }
+  };
+
+  if (loading) return <p>Loading discussion...</p>;
+  if (!discussion) return <p>Discussion not found.</p>;
+
+  return (
+    <div className="mt-14 px-4 sm:px-3 md:px-5 lg:px-28 xl:px-28 w-full h-full p-4">
+      <div className="flex items-center gap-2 mb-4">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-lg font-medium text-gray-600 hover:text-gray-800"
+        >
+          <FiChevronLeft /> Back
+        </button>
+      </div>
+      <h1 className="text-2xl font-bold mb-4">{discussion.title}</h1>
+      <p className="text-gray-600 mb-4">{discussion.description}</p>
+      <div className="flex items-center gap-2 text-sm text-gray-500">
+        <span>{discussion.author}</span>
+        <span>•</span>
+        <span>{discussion.createdAt}</span>
+      </div>
+
+      {isTeacher && discussion.status !== "closed" && (
+        <button
+          onClick={handleCloseDiscussion}
+          className="text-red-500 mt-4"
+        >
+          Close Discussion
+        </button>
+      )}
+
+      {/* Add Comment Section */}
+      <div className="mt-8 flex flex-col gap-4">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Type your comment here..."
+          className="w-full border p-2 mt-1 resize-none min-h-[20px]"
+        ></textarea>
+        <button
+          onClick={handleCommentSubmit}
+          className="bg-blue-500 text-white p-2 w-full sm:w-1/6 rounded-md"
+          disabled={!newComment.trim()}
+        >
+          Post Comment
+        </button>
+      </div>
+
+      {/* Comments Section */}
+      <div className="mt-8 w-full">
+        <h2 className="text-xl font-bold mb-4">{comments.length} Comments</h2>
+        {comments.length === 0 && <p>No comments yet.</p>}
+        {comments.map((comment) => (
+          <div key={comment.id} className="bg-slate-100 shadow-md rounded-lg p-4 mt-4">
+            <div className="flex items-center gap-2">
+              <span className="font-medium">{comment.author}</span>
+              <span className="text-sm text-gray-500">{comment.createdAt}</span>
             </div>
-
-            {/* Header with Tabs and Create Button */}
-            <div className="flex justify-between items-center mb-4">
-                {/* Tabs */}
-                <div className="flex gap-4 relative">
-                    <button
-                        onClick={() => setSortBy("createdAt")}
-                        className={`text-lg font-medium ${
-                            sortBy === "createdAt" ? "text-black" : "text-gray-500"
-                        }`}
-                    >
-                        Latest
-                    </button>
-                    <button
-                        onClick={() => setSortBy("likes")}
-                        className="text-lg font-medium text-gray-500"
-                    >
-                        Hot
-                    </button>
-
-                    {/* Categories Dropdown Button */}
-                    <button
-                        onClick={() => setShowCategoryMenu(!showCategoryMenu)}
-                        className="text-lg font-medium text-gray-500 relative"
-                    >
-                        Categories <span className="ml-1">▾</span>
-                    </button>
-
-                    {/* Dropdown Menu */}
-                    {showCategoryMenu && (
-                        <div className="absolute top-8 left-0 bg-white border rounded shadow-md z-10">
-                            <ul className="py-2">
-                                {allCategories.map((cat, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() => handleCategoryClick(cat)}
-                                        className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                                    >
-                                        {cat}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </div>
-
-                {/* Create Button */}
-                <button
-                    onClick={() => router.push(`/discussion/${id}/create-topic`)}
-                    className="bg-black text-white font-bold text-lg px-4 py-2 rounded-md"
-                >
-                    + Create
-                </button>
-            </div>
-
-            {/* Topic List */}
-            <div className="space-y-4">
-                {sortedTopics.map((topic) => (
-                    <div
-                        key={topic.id}
-                        className="border-b border-gray-200 pb-4 last-of-type:border-b-0 cursor-pointer"
-                        onClick={() => router.push(`/discussion/${id}/topic/${topic.id}`)}
-                    >
-                        {/* User Info */}
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                            <div>
-                                <p className="text-sm font-medium">{topic.author}</p>
-                                <p className="text-xs text-gray-500">{topic.createdAt}</p>
-                            </div>
-                        </div>
-
-                        {/* Title and Description */}
-                        <div>
-                            <h3 className="text-lg font-semibold mb-1">{topic.title}</h3>
-                            <p className="text-sm text-gray-600">{topic.description}</p>
-                        </div>
-
-                        {/* Interaction Icons */}
-                        <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                            <span className="flex items-center gap-1">
-                                <FaRegCommentDots />
-                                <span>{topic.comments}</span>
-                            </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+            <p className="mt-2">{comment.content}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

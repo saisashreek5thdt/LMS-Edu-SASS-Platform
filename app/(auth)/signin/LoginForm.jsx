@@ -53,7 +53,7 @@ export default function LoginForm({ className, ...props }) {
       const data = await response.json();
       if (response.ok) {
         const { token, id, userType, logo } = data;
-        localStorage.setItem("authToken", token);
+        localStorage.setItem("token", token);
         login({ id, type: userType, email, logo });
         toast.success(`${userType} Is Authenticated`);
         router.push(`/dashboard/${id}/${userType}`);

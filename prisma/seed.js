@@ -1,12 +1,26 @@
-// prisma/seed.ts
-import { PrismaClient } from "@prisma/client";
-
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
+  // Optional: clear existing data
+  await prisma.subscription.deleteMany();
   await prisma.feature.deleteMany();
   await prisma.plan.deleteMany();
+  await prisma.category.deleteMany();
 
+  // ✅ Seed Categories
+  await prisma.category.createMany({
+    data: [
+      { id: 1, name: "Design" },
+      { id: 2, name: "Development" },
+      { id: 3, name: "Product Management" },
+    ],
+    skipDuplicates: true,
+  });
+
+  console.log("✅ Categories seeded");
+
+  // ✅ Seed Plans
   const basic = await prisma.plan.create({
     data: {
       title: "Basic",
@@ -67,10 +81,10 @@ async function main() {
     },
   });
 
-  console.log("✅ Plans seeded successfully:", {
-    basicId: basic.id,
-    professionalId: professional.id,
-    enterpriseId: enterprise.id,
+  console.log("✅ Plans seeded:", {
+    basic: basic.id,
+    professional: professional.id,
+    enterprise: enterprise.id,
   });
 }
 

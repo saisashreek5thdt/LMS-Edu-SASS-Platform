@@ -45,6 +45,7 @@ model Tutor {
   subscription Subscription? 
 }
 
+
 model Teacher {
   id         Int     @id @default(autoincrement())
   schoolId   Int
@@ -53,6 +54,8 @@ model Teacher {
   password   String
   isVerified Boolean @default(false)
   school     School  @relation(fields: [schoolId], references: [id])
+  discussions Discussion[]
+  comments    Comment[]
 }
 
 model Student {
@@ -63,6 +66,46 @@ model Student {
   password   String
   isVerified Boolean @default(false)
   school     School  @relation(fields: [schoolId], references: [id])
+  comments   Comment[]
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique // e.g., "Math", "Science", "English"
+
+  discussions Discussion[]
+}
+
+model Discussion {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      DiscussionStatus @default(open)
+  categoryId  Int
+  teacherId   Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  teacher     Teacher  @relation(fields: [teacherId], references: [id])
+  comments    Comment[]
+}
+
+enum DiscussionStatus {
+  open
+  closed
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  content     String
+  createdAt   DateTime @default(now())
+  likes       Int      @default(0)
+  studentId   Int?
+  teacherId   Int?
+  discussionId Int
+  student     Student? @relation(fields: [studentId], references: [id])
+  teacher     Teacher? @relation(fields: [teacherId], references: [id])
+  discussion  Discussion @relation(fields: [discussionId], references: [id])
 }
 
 model Plan {
